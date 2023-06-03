@@ -6,11 +6,13 @@ import com.willfp.eco.core.fast.fast
 import com.willfp.eco.core.gui.menu.Menu
 import com.willfp.eco.core.gui.menu.MenuLayer
 import com.willfp.eco.core.gui.onClick
+import com.willfp.eco.core.gui.page.PageBuilder
 import com.willfp.eco.core.gui.slot
 import com.willfp.eco.core.gui.slot.Slot
 import com.willfp.eco.core.items.Items
 import com.willfp.eco.core.placeholder.context.placeholderContext
 import com.willfp.ecomenus.slots.SlotTypes
+import com.willfp.libreforge.ConfigViolation
 import com.willfp.libreforge.EmptyProvidedHolder
 import com.willfp.libreforge.ViolationContext
 import com.willfp.libreforge.conditions.Conditions
@@ -29,7 +31,7 @@ class ConfigurableSlot(
     override val layer = runCatching { enumValueOf<MenuLayer>(config.getString("layer")) }
         .getOrElse { MenuLayer.MIDDLE }
 
-    val context = baseContext.with("slot at row ${row}, column $column, page $page")
+    private val context = baseContext.with("slot at row ${row}, column $column, page $page")
 
     private val conditions = Conditions.compile(
         config.getSubsections("conditions"),
@@ -80,5 +82,15 @@ class ConfigurableSlot(
         }
 
         return slot
+    }
+
+    fun <T : PageBuilder> add(builder: T): T {
+        try {
+            builder.addComponent(this)
+        } catch (e: Exception) {
+            context.log(ConfigViolation("location", "Invalid location!"))
+        }
+
+        return builder
     }
 }

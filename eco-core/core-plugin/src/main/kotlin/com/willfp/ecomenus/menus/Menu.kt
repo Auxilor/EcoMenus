@@ -5,16 +5,13 @@ import com.willfp.eco.core.config.interfaces.Config
 import com.willfp.eco.core.gui.addPage
 import com.willfp.eco.core.gui.menu
 import com.willfp.eco.core.gui.menu.Menu
-import com.willfp.eco.core.gui.onClose
 import com.willfp.eco.core.gui.page.PageChanger
 import com.willfp.eco.core.gui.slot.FillerMask
 import com.willfp.eco.core.gui.slot.MaskItems
 import com.willfp.ecomenus.components.ConfigurableSlot
-import com.willfp.ecomenus.components.PositionedComponent
 import com.willfp.ecomenus.components.addComponent
 import com.willfp.ecomenus.components.impl.PositionedPageChanger
 import com.willfp.ecomponent.menuStateVar
-import com.willfp.libreforge.ConfigViolation
 import com.willfp.libreforge.ViolationContext
 import org.bukkit.entity.Player
 import java.util.Stack
@@ -42,7 +39,7 @@ fun buildMenu(plugin: EcoPlugin, menu: EcoMenu, config: Config): Menu {
 
     val slots = mutableListOf<ConfigurableSlot>()
 
-    for (slotConfig in config.getSubsections("slots")) {
+    for (slotConfig in config.getSubsections("slot_templates")) {
         val slot = ConfigurableSlot(
             plugin,
             ViolationContext(plugin, "menu ${menu.id}"),
@@ -89,11 +86,7 @@ fun buildMenu(plugin: EcoPlugin, menu: EcoMenu, config: Config): Menu {
                         continue
                     }
 
-                    try {
-                        this.addComponent(slot)
-                    } catch (e: Exception) {
-                        slot.context.log(ConfigViolation("location", "Invalid location!"))
-                    }
+                    slot.add(this)
                 }
             }
         }
