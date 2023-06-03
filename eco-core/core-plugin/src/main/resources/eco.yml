@@ -1,0 +1,5 @@
+options:
+  bstats-id: 0
+  resource-id: 0
+  color: "&a"
+  uses-reflective-reload: false
