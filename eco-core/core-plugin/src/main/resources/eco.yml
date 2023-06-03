@@ -1,5 +1,5 @@
 options:
   bstats-id: 0
   resource-id: 0
-  color: "#FCEDDA"
+  color: "&#FCEDDA"
   uses-reflective-reload: false

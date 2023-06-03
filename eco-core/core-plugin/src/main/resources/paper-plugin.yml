@@ -11,3 +11,23 @@ dependencies:
 load-after:
   - name: eco
     bootstrap: false
+
+permissions:
+  ecomenus.*:
+    description: All ecomenus permissions
+    default: op
+    children:
+      ecomenus.command.*: true
+  ecomenus.command.*:
+    description: All commands
+    default: op
+    children:
+      ecomenus.command.reload: true
+      ecomenus.command.ecomenus: true
+
+  ecomenus.command.reload:
+    description: Allows reloading the config
+    default: op
+  ecomenus.command.ecomenus:
+    description: Allows the use of /ecomenus.
+    default: true
