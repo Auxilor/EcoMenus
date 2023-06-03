@@ -35,9 +35,10 @@ allprojects {
     }
 
     dependencies {
-        compileOnly("com.willfp:eco:6.53.0")
+        compileOnly("com.willfp:eco:6.63.0")
         compileOnly("org.jetbrains:annotations:23.0.0")
         compileOnly("org.jetbrains.kotlin:kotlin-stdlib:1.7.10")
+        implementation("com.willfp:ecomponent:1.4.1")
     }
 
     java {
@@ -46,6 +47,10 @@ allprojects {
     }
 
     tasks {
+        shadowJar {
+            relocate("com.willfp.ecomponent", "com.willfp.ecomenus.ecomponent")
+        }
+
         compileKotlin {
             kotlinOptions {
                 jvmTarget = "17"
@@ -71,5 +76,18 @@ allprojects {
         build {
             dependsOn(shadowJar)
         }
+    }
+}
+
+tasks {
+    clean {
+        doLast {
+            file("${rootDir}/bin").deleteRecursively()
+        }
+    }
+
+    shadowJar {
+        destinationDirectory.set(file("$rootDir/bin/"))
+        archiveFileName.set("${project.name} v${project.version}.jar")
     }
 }
