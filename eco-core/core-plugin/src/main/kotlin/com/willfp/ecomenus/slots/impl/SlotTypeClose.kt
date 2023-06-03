@@ -17,10 +17,12 @@ import org.bukkit.event.inventory.InventoryClickEvent
 
 object SlotTypeClose : SlotType("close") {
     override fun create(config: Config, plugin: EcoPlugin, context: ViolationContext): SlotFunction {
-        return object : SlotFunction {
-            override fun execute(player: Player, event: InventoryClickEvent, slot: Slot, menu: Menu) {
-                menu.close(player)
-            }
+        return CloseSlotFunction
+    }
+
+    private object CloseSlotFunction : SlotFunction {
+        override fun execute(player: Player, event: InventoryClickEvent, slot: Slot, menu: Menu) {
+            menu.close(player)
         }
     }
 }

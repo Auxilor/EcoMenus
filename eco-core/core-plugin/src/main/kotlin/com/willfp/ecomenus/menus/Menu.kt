@@ -5,6 +5,7 @@ import com.willfp.eco.core.config.interfaces.Config
 import com.willfp.eco.core.gui.addPage
 import com.willfp.eco.core.gui.menu
 import com.willfp.eco.core.gui.menu.Menu
+import com.willfp.eco.core.gui.onClose
 import com.willfp.eco.core.gui.page.PageChanger
 import com.willfp.eco.core.gui.slot.FillerMask
 import com.willfp.eco.core.gui.slot.MaskItems
@@ -95,6 +96,11 @@ fun buildMenu(plugin: EcoPlugin, menu: EcoMenu, config: Config): Menu {
                     }
                 }
             }
+        }
+
+        onClose { event, menu ->
+            val player = event.player as Player
+            menu.close(player)
         }
     }
 }
