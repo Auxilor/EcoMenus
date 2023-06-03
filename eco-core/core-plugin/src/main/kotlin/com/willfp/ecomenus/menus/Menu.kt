@@ -34,8 +34,8 @@ fun Menu.close(player: Player) =
 
 fun buildMenu(plugin: EcoPlugin, config: Config): Menu {
     val mask = FillerMask(
-        MaskItems.fromItemNames(plugin.configYml.getStrings("mask.materials")),
-        *plugin.configYml.getStrings("mask.pattern").toTypedArray()
+        MaskItems.fromItemNames(config.getStrings("mask.materials")),
+        *config.getStrings("mask.pattern").toTypedArray()
     )
 
     return menu(mask.rows) {
