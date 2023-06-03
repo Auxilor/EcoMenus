@@ -16,6 +16,6 @@ class DynamicMenuCommand(
     true
 ) {
     override fun onExecute(sender: Player, args: List<String>) {
-        menu.menu.open(sender)
+        menu.open(sender)
     }
 }

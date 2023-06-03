@@ -4,10 +4,12 @@ plugins {
     `maven-publish`
     kotlin("jvm") version "1.7.10"
     id("com.github.johnrengelman.shadow") version "8.0.0"
+    id("com.willfp.libreforge-gradle-plugin") version "1.0.0"
 }
 
 group = "com.willfp"
 version = findProperty("version")!!
+val libreforgeVersion = findProperty("libreforge-version")
 
 base {
     archivesName.set(project.name)
@@ -38,7 +40,6 @@ allprojects {
         compileOnly("com.willfp:eco:6.63.0")
         compileOnly("org.jetbrains:annotations:23.0.0")
         compileOnly("org.jetbrains.kotlin:kotlin-stdlib:1.7.10")
-        implementation("com.willfp:ecomponent:1.4.1")
     }
 
     java {
@@ -48,6 +49,7 @@ allprojects {
 
     tasks {
         shadowJar {
+            relocate("com.willfp.libreforge.loader", "com.willfp.ecomenus.libreforge.loader")
             relocate("com.willfp.ecomponent", "com.willfp.ecomenus.ecomponent")
         }
 
@@ -68,6 +70,7 @@ allprojects {
             filesMatching(listOf("**plugin.yml", "**eco.yml")) {
                 expand(
                     "version" to project.version,
+                    "libreforgeVersion" to libreforgeVersion,
                     "pluginName" to rootProject.name
                 )
             }
@@ -76,18 +79,5 @@ allprojects {
         build {
             dependsOn(shadowJar)
         }
-    }
-}
-
-tasks {
-    clean {
-        doLast {
-            file("${rootDir}/bin").deleteRecursively()
-        }
-    }
-
-    shadowJar {
-        destinationDirectory.set(file("$rootDir/bin/"))
-        archiveFileName.set("${project.name} v${project.version}.jar")
     }
 }

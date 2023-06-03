@@ -1,13 +1,20 @@
+# The ID of the menu is the name of the .yml file,
+# for example help.yml has the ID of help
+# You can place menus anywhere in this folder,
+# including in subfolders if you want to organize your menu configs
+# _example.yml is not loaded.
+
 # The title of the GUI
 title: "Example GUI"
 
-command: examplemenu # (Optional) The command to open the GUI, if not set, there will be no command.
+# (Optional) The command to open the GUI, if not set, there will be no command.
+command: examplemenu
 
 mask:
   # The way the mask works is by having a list of materials
   # And then a pattern to use those materials.
 
-  # The size of the GUI is the size of the mask.
+  # The size of the GUI is determined by the size of the mask.
 
   # The pattern is the rows in the GUI
   # Each line must be 9 long, and the amount of rows should be the amount of rows in the GUI
@@ -27,14 +34,66 @@ mask:
     - "211111112"
     - "211101112"
 
-# Options for the close item
-close:
-  item: barrier
-  name: "&cClose"
-  enabled: false
-  location:
-    row: 6
-    column: 5
 
-# Custom GUI slots; see here for a how-to: https://plugins.auxilor.io/all-plugins/custom-gui-slots
-custom-slots: [ ]
+# Read https://plugins.auxilor.io/effects/configuring-a-condition
+# The conditions required to open the GUI
+conditions: [ ]
+
+# The messages to send when the conditions are not met
+cannot-open-messages:
+  - "&cYou cannot open this menu!"
+
+# Options for the page arrows
+# If on the first page, the backwards arrow will not be shown,
+# and if on the last page, the forwards arrow will not be shown.
+forwards-arrow:
+  item: arrow name:"&fNext Page"
+  enabled: true
+  location:
+    row: 3
+    column: 6
+
+backwards-arrow:
+  item: arrow name:"&fPrevious Page"
+  enabled: true
+  location:
+    row: 3
+    column: 4
+
+pages:
+  - page: 1
+    slots:
+      - item: barrier name:"&cClose"
+        lore: [ ]
+        location:
+          row: 6
+          column: 5
+          # (Optional) You can specify the layer of the slot.
+          # The layer can be any of: lower, middle, upper, or top (defaults to middle)
+          # This is useful if you want to have a slot on top of another slot, and
+          # have the upper slot show if some conditions are met.
+          layer: middle
+
+        # Read https://plugins.auxilor.io/effects/configuring-a-condition
+        # The conditions required to click the item
+        conditions: [ ]
+
+        # If the item should be shown if the conditions are not met
+        show-if-not-met: true
+
+        left-click:
+          - type: effects
+            effects:
+              - id: send_message
+                args:
+                  message: "&cYou clicked the close button!"
+
+          - type: command
+            commands: [ ]
+
+          - type: menu
+            menu: other_example_menu
+
+          - item: console_command
+            commands:
+              - "eco give %player% 100"

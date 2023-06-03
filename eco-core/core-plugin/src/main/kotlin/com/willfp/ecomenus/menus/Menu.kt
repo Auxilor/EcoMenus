@@ -2,15 +2,19 @@ package com.willfp.ecomenus.menus
 
 import com.willfp.eco.core.EcoPlugin
 import com.willfp.eco.core.config.interfaces.Config
+import com.willfp.eco.core.gui.addPage
 import com.willfp.eco.core.gui.menu
 import com.willfp.eco.core.gui.menu.Menu
-import com.willfp.eco.core.gui.slot.ConfigSlot
+import com.willfp.eco.core.gui.page.PageChanger
 import com.willfp.eco.core.gui.slot.FillerMask
 import com.willfp.eco.core.gui.slot.MaskItems
+import com.willfp.ecomenus.components.ConfigurableSlot
+import com.willfp.ecomenus.components.PositionedComponent
 import com.willfp.ecomenus.components.addComponent
-import com.willfp.ecomenus.components.impl.BackButton
-import com.willfp.ecomenus.components.impl.CloseButton
+import com.willfp.ecomenus.components.impl.PositionedPageChanger
 import com.willfp.ecomponent.menuStateVar
+import com.willfp.libreforge.ConfigViolation
+import com.willfp.libreforge.ViolationContext
 import org.bukkit.entity.Player
 import java.util.Stack
 
@@ -32,7 +36,7 @@ fun Menu.open(
 fun Menu.close(player: Player) =
     this.previousMenus[player].popOrNull()?.open(player) ?: player.closeInventory()
 
-fun buildMenu(plugin: EcoPlugin, config: Config): Menu {
+fun buildMenu(plugin: EcoPlugin, menu: EcoMenu, config: Config): Menu {
     val mask = FillerMask(
         MaskItems.fromItemNames(config.getStrings("mask.materials")),
         *config.getStrings("mask.pattern").toTypedArray()
@@ -44,26 +48,35 @@ fun buildMenu(plugin: EcoPlugin, config: Config): Menu {
         setMask(mask)
 
         addComponent(
-            CloseButton(
-                plugin.configYml.getSubsection("stats-gui.close")
+            PositionedPageChanger(
+                PageChanger.Direction.FORWARDS,
+                config.getSubsection("forwards-arrow")
             )
         )
 
         addComponent(
-            BackButton(
-                plugin.configYml.getSubsection("stats-gui.back")
-            ) { player, menu ->
-                menu.close(player)
-            }
+            PositionedPageChanger(
+                PageChanger.Direction.BACKWARDS,
+                config.getSubsection("backwards-arrow")
+            )
         )
 
-        // TODO: Implement Slots
-        for (test in plugin.configYml.getSubsections("stats-gui.custom-slots")) {
-            setSlot(
-                test.getInt("row"),
-                test.getInt("column"),
-                ConfigSlot(test)
-            )
+        for (page in config.getSubsections("pages")) {
+            addPage(page.getInt("page")) {
+                for (slotConfig in config.getSubsections("slots")) {
+                    val slot = ConfigurableSlot(
+                        plugin,
+                        ViolationContext(plugin, "menu ${menu.id}"),
+                        slotConfig
+                    )
+
+                    try {
+                        addComponent(slot)
+                    } catch (e: Exception) {
+                        slot.context.log(ConfigViolation("location", "The location of the slot is invalid!"))
+                    }
+                }
+            }
         }
     }
 }

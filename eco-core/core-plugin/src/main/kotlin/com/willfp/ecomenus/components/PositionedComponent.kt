@@ -16,6 +16,9 @@ interface PositionedComponent : GUIComponent {
     val columnSize: Int
         get() = 1
 
+    val layer: MenuLayer
+        get() = MenuLayer.MIDDLE
+
     override fun getRows() = rowSize
     override fun getColumns() = columnSize
 }
@@ -23,16 +26,7 @@ interface PositionedComponent : GUIComponent {
 fun MenuBuilder.addComponent(
     component: PositionedComponent
 ) = if (component.isEnabled) addComponent(
-    component.row,
-    component.column,
-    component
-) else this
-
-fun MenuBuilder.addComponent(
-    layer: MenuLayer,
-    component: PositionedComponent
-) = if (component.isEnabled) addComponent(
-    layer,
+    component.layer,
     component.row,
     component.column,
     component

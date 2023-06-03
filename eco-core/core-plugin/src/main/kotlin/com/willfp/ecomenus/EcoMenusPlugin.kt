@@ -1,31 +1,21 @@
 package com.willfp.ecomenus
 
-import com.willfp.eco.core.EcoPlugin
 import com.willfp.eco.core.command.impl.PluginCommand
 import com.willfp.ecomenus.commands.CommandEcoMenus
-import com.willfp.ecomenus.config.ConfigCategory
 import com.willfp.ecomenus.menus.EcoMenus
+import com.willfp.libreforge.loader.LibreforgePlugin
+import com.willfp.libreforge.loader.configs.ConfigCategory
 
-class EcoMenusPlugin : EcoPlugin() {
-    private val categories = setOf<ConfigCategory>(
-        EcoMenus
-    )
-
-    override fun handleEnable() {
-        for (category in categories) {
-            category.copyConfigs(this)
-        }
-    }
-
-    override fun handleReload() {
-        for (category in categories) {
-            category.reload(this)
-        }
-    }
-
+class EcoMenusPlugin : LibreforgePlugin() {
     override fun loadPluginCommands(): List<PluginCommand> {
         return listOf(
             CommandEcoMenus(this)
+        )
+    }
+
+    override fun loadConfigCategories(): List<ConfigCategory> {
+        return listOf(
+            EcoMenus
         )
     }
 }

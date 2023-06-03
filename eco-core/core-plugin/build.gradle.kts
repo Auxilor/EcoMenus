@@ -3,13 +3,19 @@ version = rootProject.version
 
 dependencies {
     compileOnly("io.papermc.paper:paper-api:1.19.3-R0.1-SNAPSHOT")
+    compileOnly("com.github.ben-manes.caffeine:caffeine:3.0.5")
+
+    implementation("com.willfp:ecomponent:1.4.1")
 }
 
 publishing {
     publications {
-        register("maven", MavenPublication::class) {
-            from(components["java"])
+        register<MavenPublication>("maven") {
+            groupId = project.group.toString()
+            version = project.version.toString()
             artifactId = rootProject.name
+
+            artifact(rootProject.tasks.shadowJar.get().archiveFile)
         }
     }
 }
