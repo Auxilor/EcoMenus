@@ -24,11 +24,12 @@ class ConfigurableSlot(
 ) : PositionedComponent {
     override val row: Int = config.getInt("location.row")
     override val column: Int = config.getInt("location.column")
+    val page: Int = config.getInt("location.page")
 
     override val layer = runCatching { enumValueOf<MenuLayer>(config.getString("layer")) }
         .getOrElse { MenuLayer.MIDDLE }
 
-    val context = baseContext.with("slot at row ${row}, column $column")
+    val context = baseContext.with("slot at row ${row}, column $column, page $page")
 
     private val conditions = Conditions.compile(
         config.getSubsections("conditions"),

@@ -3,6 +3,7 @@ package com.willfp.ecomenus.components
 import com.willfp.eco.core.gui.GUIComponent
 import com.willfp.eco.core.gui.menu.MenuBuilder
 import com.willfp.eco.core.gui.menu.MenuLayer
+import com.willfp.eco.core.gui.page.PageBuilder
 
 interface PositionedComponent : GUIComponent {
     val row: Int
@@ -23,11 +24,13 @@ interface PositionedComponent : GUIComponent {
     override fun getColumns() = columnSize
 }
 
-fun MenuBuilder.addComponent(
+// Little hack to prevent two identical methods
+@Suppress("UNCHECKED_CAST")
+fun <T : PageBuilder> T.addComponent(
     component: PositionedComponent
-) = if (component.isEnabled) addComponent(
+): T = if (component.isEnabled) addComponent(
     component.layer,
     component.row,
     component.column,
     component
-) else this
+) as T else this

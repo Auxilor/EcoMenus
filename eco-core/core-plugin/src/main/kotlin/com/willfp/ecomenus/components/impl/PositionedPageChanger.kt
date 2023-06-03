@@ -2,6 +2,7 @@ package com.willfp.ecomenus.components.impl
 
 import com.willfp.eco.core.config.interfaces.Config
 import com.willfp.eco.core.gui.menu.Menu
+import com.willfp.eco.core.gui.menu.MenuLayer
 import com.willfp.eco.core.gui.page.PageChanger
 import com.willfp.eco.core.items.Items
 import com.willfp.ecomenus.components.PositionedComponent
@@ -18,6 +19,7 @@ class PositionedPageChanger(
 
     override val row: Int = config.getInt("location.row")
     override val column: Int = config.getInt("location.column")
+    override val layer = MenuLayer.TOP
 
     override val isEnabled = config.getBool("enabled")
 

@@ -37,15 +37,26 @@ fun Menu.close(player: Player) =
     this.previousMenus[player].popOrNull()?.open(player) ?: player.closeInventory()
 
 fun buildMenu(plugin: EcoPlugin, menu: EcoMenu, config: Config): Menu {
-    val mask = FillerMask(
-        MaskItems.fromItemNames(config.getStrings("mask.materials")),
-        *config.getStrings("mask.pattern").toTypedArray()
-    )
+    val pageConfigs = config.getSubsections("pages")
 
-    return menu(mask.rows) {
+    val slots = mutableListOf<ConfigurableSlot>()
+
+    for (slotConfig in config.getSubsections("slots")) {
+        val slot = ConfigurableSlot(
+            plugin,
+            ViolationContext(plugin, "menu ${menu.id}"),
+            slotConfig
+        )
+
+        slots += slot
+    }
+
+    return menu(config.getInt("rows")) {
         title = config.getFormattedString("title")
 
-        setMask(mask)
+        allowChangingHeldItem()
+
+        maxPages(pageConfigs.size)
 
         addComponent(
             PositionedPageChanger(
@@ -61,19 +72,26 @@ fun buildMenu(plugin: EcoPlugin, menu: EcoMenu, config: Config): Menu {
             )
         )
 
-        for (page in config.getSubsections("pages")) {
-            addPage(page.getInt("page")) {
-                for (slotConfig in config.getSubsections("slots")) {
-                    val slot = ConfigurableSlot(
-                        plugin,
-                        ViolationContext(plugin, "menu ${menu.id}"),
-                        slotConfig
-                    )
+        for (page in pageConfigs) {
+            val mask = FillerMask(
+                MaskItems.fromItemNames(page.getStrings("mask.items")),
+                *page.getStrings("mask.pattern").toTypedArray()
+            )
+
+            val pageNumber = page.getInt("page")
+
+            addPage(pageNumber) {
+                setMask(mask)
+
+                for (slot in slots) {
+                    if (pageNumber != slot.page) {
+                        continue
+                    }
 
                     try {
-                        addComponent(slot)
+                        this.addComponent(slot)
                     } catch (e: Exception) {
-                        slot.context.log(ConfigViolation("location", "The location of the slot is invalid!"))
+                        slot.context.log(ConfigViolation("location", "Invalid location!"))
                     }
                 }
             }

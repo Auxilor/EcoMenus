@@ -10,30 +10,8 @@ title: "Example GUI"
 # (Optional) The command to open the GUI, if not set, there will be no command.
 command: examplemenu
 
-mask:
-  # The way the mask works is by having a list of materials
-  # And then a pattern to use those materials.
-
-  # The size of the GUI is determined by the size of the mask.
-
-  # The pattern is the rows in the GUI
-  # Each line must be 9 long, and the amount of rows should be the amount of rows in the GUI
-  # A zero represents nothing
-  # A 1 represents the first material
-  # A 2 represents the second material
-  # And so on, you can add up to 9.
-
-  materials:
-    - gray_stained_glass_pane
-    - black_stained_glass_pane
-  pattern:
-    - "211101112"
-    - "211111112"
-    - "210000012"
-    - "210010012"
-    - "211111112"
-    - "211101112"
-
+# The size of the GUI, between 1 and 6
+rows: 6
 
 # Read https://plugins.auxilor.io/effects/configuring-a-condition
 # The conditions required to open the GUI
@@ -62,38 +40,62 @@ backwards-arrow:
 
 pages:
   - page: 1
-    slots:
-      - item: barrier name:"&cClose"
-        lore: [ ]
-        location:
-          row: 6
-          column: 5
-          # (Optional) You can specify the layer of the slot.
-          # The layer can be any of: lower, middle, upper, or top (defaults to middle)
-          # This is useful if you want to have a slot on top of another slot, and
-          # have the upper slot show if some conditions are met.
-          layer: middle
+    mask:
+      # The way the mask works is by having a list of materials
+      # And then a pattern to use those materials.
 
-        # Read https://plugins.auxilor.io/effects/configuring-a-condition
-        # The conditions required to click the item
-        conditions: [ ]
+      # The pattern is the rows in the GUI
+      # Each line must be 9 long, and the amount of rows should be the amount of rows in the GUI
+      # A zero represents nothing
+      # A 1 represents the first material
+      # A 2 represents the second material
+      # And so on, you can add up to 9.
 
-        # If the item should be shown if the conditions are not met
-        show-if-not-met: true
+      items:
+        - gray_stained_glass_pane
+        - black_stained_glass_pane
+      pattern:
+        - "211101112"
+        - "211111112"
+        - "210000012"
+        - "210010012"
+        - "211111112"
+        - "211101112"
 
-        left-click:
-          - type: effects
-            effects:
-              - id: send_message
-                args:
-                  message: "&cYou clicked the close button!"
+slots:
+  - item: barrier name:"&cClose"
+    lore: [ ]
+    location:
+      row: 6
+      column: 5
+      page: 1
 
-          - type: command
-            commands: [ ]
+      # (Optional) You can specify the layer of the slot.
+      # The layer can be any of: lower, middle, upper, or top (defaults to middle)
+      # This is useful if you want to have a slot on top of another slot, and
+      # have the upper slot show if some conditions are met.
+      layer: middle
 
-          - type: menu
-            menu: other_example_menu
+    # Read https://plugins.auxilor.io/effects/configuring-a-condition
+    # The conditions required to click the item
+    conditions: [ ]
 
-          - item: console_command
-            commands:
-              - "eco give %player% 100"
+    # If the item should be shown if the conditions are not met
+    show-if-not-met: true
+
+    left-click:
+      - type: effects
+        effects:
+          - id: send_message
+            args:
+              message: "&cYou clicked the close button!"
+
+      - type: command
+        commands: [ ]
+
+      - type: menu
+        menu: other_example_menu
+
+      - item: console_command
+        commands:
+          - "eco give %player% 100"
