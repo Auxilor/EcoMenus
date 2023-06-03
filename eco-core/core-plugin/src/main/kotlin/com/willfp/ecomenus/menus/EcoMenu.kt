@@ -40,6 +40,10 @@ class EcoMenu(
             return
         }
 
+        forceOpen(player, parent)
+    }
+
+    fun forceOpen(player: Player, parent: Menu? = null) {
         menu.open(player, parent)
     }
 }

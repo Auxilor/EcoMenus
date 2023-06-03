@@ -4,3 +4,7 @@ messages:
   not-player: "&cThis command must be run by a player"
   invalid-command: "&cUnknown subcommand!"
   reloaded: "Reloaded!"
+
+  invalid-player: "&cInvalid player!"
+  invalid-menu: "&cInvalid menu!"
+  opened: "Opened &a%menu%&r for &a%player%&r!"

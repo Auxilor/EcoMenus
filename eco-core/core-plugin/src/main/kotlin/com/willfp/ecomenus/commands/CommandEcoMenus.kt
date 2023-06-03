@@ -12,6 +12,8 @@ class CommandEcoMenus(plugin: EcoPlugin) : PluginCommand(
 ) {
     init {
         this.addSubcommand(CommandReload(plugin))
+            .addSubcommand(CommandOpen(plugin))
+            .addSubcommand(CommandForceOpen(plugin))
     }
 
     override fun onExecute(sender: CommandSender, args: List<String>) {

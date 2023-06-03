@@ -28,10 +28,18 @@ permissions:
     children:
       ecomenus.command.reload: true
       ecomenus.command.ecomenus: true
+      ecomenus.command.open: true
+      ecomenus.command.forceopen: true
 
-  ecomenus.command.reload:
-    description: Allows reloading the config
-    default: op
   ecomenus.command.ecomenus:
     description: Allows the use of /ecomenus.
     default: true
+  ecomenus.command.reload:
+    description: Allows reloading the config
+    default: op
+  ecomenus.command.open:
+    description: Allows the use of /ecomenus open.
+    default: op
+  ecomenus.command.forceopen:
+    description: Allows the use of /ecomenus forceopen.
+    default: op

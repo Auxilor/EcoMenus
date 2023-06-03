@@ -20,7 +20,7 @@ object EcoMenus : ConfigCategory("menu", "menus") {
         return registry.values()
     }
 
-    operator fun get(id: String): EcoMenu? {
-        return registry.get(id)
+    operator fun get(id: String?): EcoMenu? {
+        return registry.get(id ?: return null)
     }
 }
