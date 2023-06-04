@@ -68,7 +68,7 @@ class ConfigurableSlot(
                 val function = type.create(
                     action,
                     plugin,
-                    context.with("slot at row ${row}, column $column").with(section).with(typeName)
+                    context.with(section).with(typeName)
                 )?.toSlotAction() ?: continue
 
                 onClick(clickType, function)

@@ -31,9 +31,8 @@ class CommandSlotFunction(
             Bukkit.dispatchCommand(
                 sender ?: player,
                 PlaceholderManager.translatePlaceholders(
-                    command, placeholderContext(
-                        player = player
-                    )
+                    command.replace("%player%", player.name),
+                    placeholderContext(player = player)
                 )
             )
         }
