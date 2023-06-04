@@ -39,7 +39,7 @@ fun buildMenu(plugin: EcoPlugin, menu: EcoMenu, config: Config): Menu {
 
     val slots = mutableListOf<ConfigurableSlot>()
 
-    for (slotConfig in config.getSubsections("slot_templates")) {
+    for (slotConfig in config.getSubsections("slots")) {
         val slot = ConfigurableSlot(
             plugin,
             ViolationContext(plugin, "menu ${menu.id}"),
@@ -93,7 +93,7 @@ fun buildMenu(plugin: EcoPlugin, menu: EcoMenu, config: Config): Menu {
 
         onClose { event, menu ->
             val player = event.player as Player
-            menu.close(player)
+            menu.previousMenus[player].popOrNull()?.open(player)
         }
     }
 }

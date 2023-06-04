@@ -28,7 +28,7 @@ class ConfigurableSlot(
     override val column: Int = config.getInt("location.column")
     val page: Int = config.getInt("location.page")
 
-    override val layer = runCatching { enumValueOf<MenuLayer>(config.getString("layer")) }
+    override val layer = runCatching { enumValueOf<MenuLayer>(config.getString("location.layer").uppercase()) }
         .getOrElse { MenuLayer.MIDDLE }
 
     private val context = baseContext.with("slot at row ${row}, column $column, page $page")
@@ -84,13 +84,11 @@ class ConfigurableSlot(
         return slot
     }
 
-    fun <T : PageBuilder> add(builder: T): T {
+    fun add(builder: PageBuilder) {
         try {
             builder.addComponent(this)
         } catch (e: Exception) {
             context.log(ConfigViolation("location", "Invalid location!"))
         }
-
-        return builder
     }
 }
