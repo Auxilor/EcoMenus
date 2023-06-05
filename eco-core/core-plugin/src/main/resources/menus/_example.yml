@@ -103,6 +103,6 @@ slots:
       - type: menu
         menu: other_example_menu
 
-      - item: console_command
+      - type: console_command
         commands:
           - "eco give %player% 100"
