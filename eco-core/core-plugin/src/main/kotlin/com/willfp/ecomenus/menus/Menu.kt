@@ -82,7 +82,7 @@ fun buildMenu(plugin: EcoPlugin, menu: EcoMenu, config: Config): Menu {
                 setMask(mask)
 
                 for (slot in slots) {
-                    if (pageNumber != slot.page) {
+                    if (slot.page != null && pageNumber != slot.page) {
                         continue
                     }
 

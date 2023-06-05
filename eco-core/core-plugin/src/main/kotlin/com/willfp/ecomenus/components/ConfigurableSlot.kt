@@ -28,7 +28,7 @@ class ConfigurableSlot(
 ) : PositionedComponent {
     override val row: Int = config.getInt("location.row")
     override val column: Int = config.getInt("location.column")
-    val page: Int = config.getInt("location.page")
+    val page: Int? = config.getIntOrNull("location.page")
 
     override val layer = runCatching { enumValueOf<MenuLayer>(config.getString("location.layer").uppercase()) }
         .getOrElse { MenuLayer.MIDDLE }

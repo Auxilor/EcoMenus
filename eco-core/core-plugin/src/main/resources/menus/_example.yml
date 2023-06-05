@@ -87,7 +87,7 @@ slots:
     location:
       row: 6
       column: 5
-      page: 1
+      page: 1 # If you don't specify a page, it will be on all pages
 
       # (Optional) You can specify the layer of the slot.
       # The layer can be any of: lower, middle, upper, or top (defaults to middle)
