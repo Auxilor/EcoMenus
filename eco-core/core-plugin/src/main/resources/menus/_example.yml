@@ -35,15 +35,15 @@ forwards-arrow:
   item: arrow name:"&fNext Page"
   enabled: true
   location:
-    row: 3
-    column: 6
+    row: 6
+    column: 8
 
 backwards-arrow:
   item: arrow name:"&fPrevious Page"
   enabled: true
   location:
-    row: 3
-    column: 4
+    row: 6
+    column: 2
 
 pages:
   - page: 1
@@ -61,6 +61,18 @@ pages:
       items:
         - gray_stained_glass_pane
         - black_stained_glass_pane
+      pattern:
+        - "211101112"
+        - "211111112"
+        - "210000012"
+        - "210010012"
+        - "211111112"
+        - "211101112"
+  - page: 2
+    mask:
+      items:
+        - gray_stained_glass_pane
+        - red_stained_glass_pane
       pattern:
         - "211101112"
         - "211111112"
@@ -88,7 +100,7 @@ slots:
     conditions: [ ]
 
     # If the item should be shown if the conditions are not met
-    show-if-not-met: true
+    show-if-not-met: false
 
     left-click:
       - type: effects
@@ -97,9 +109,30 @@ slots:
             args:
               message: "&cYou clicked the close button!"
 
-      - type: command
+      - type: close
         commands: [ ]
 
+      - type: menu
+        menu: other_example_menu
+
+      - type: console_command
+        commands:
+          - "eco give %player% 100"
+
+  - item: player_head head:%player% name:"&f%player%"
+    location:
+      row: 1
+      column: 5
+      page: 1
+
+    # Read https://plugins.auxilor.io/effects/configuring-a-condition
+    # The conditions required to click the item
+    conditions: [ ]
+
+    # If the item should be shown if the conditions are not met
+    show-if-not-met: true
+
+    left-click:
       - type: menu
         menu: other_example_menu
 

@@ -84,7 +84,7 @@ class ConfigurableSlot(
                     action,
                     plugin,
                     context.with(section).with(typeName)
-                )?.toSlotAction() ?: continue
+                )?.toSlotAction(conditions) ?: continue
 
                 onClick(clickType, function)
             }
