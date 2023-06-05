@@ -125,13 +125,6 @@ slots:
       column: 5
       page: 1
 
-    # Read https://plugins.auxilor.io/effects/configuring-a-condition
-    # The conditions required to click the item
-    conditions: [ ]
-
-    # If the item should be shown if the conditions are not met
-    show-if-not-met: true
-
     left-click:
       - type: menu
         menu: other_example_menu
