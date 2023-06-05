@@ -91,9 +91,8 @@ fun buildMenu(plugin: EcoPlugin, menu: EcoMenu, config: Config): Menu {
             }
         }
 
-        onClose { event, menu ->
-            val player = event.player as Player
-            menu.previousMenus[player].popOrNull()?.open(player)
+        onClose { event, _ ->
+            menu.handleClose(event.player as Player)
         }
     }
 }

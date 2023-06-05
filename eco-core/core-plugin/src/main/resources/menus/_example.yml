@@ -21,6 +21,13 @@ conditions: [ ]
 cannot-open-messages:
   - "&cYou cannot open this menu!"
 
+# Read https://plugins.auxilor.io/effects/configuring-an-effect
+# Effects to run when the GUI is opened
+open-effects: [ ]
+
+# Effects to run when the GUI is closed
+close-effects: [ ]
+
 # Options for the page arrows
 # If on the first page, the backwards arrow will not be shown,
 # and if on the last page, the forwards arrow will not be shown.

@@ -4,8 +4,8 @@ import com.willfp.eco.core.EcoPlugin
 import com.willfp.eco.core.config.interfaces.Config
 import com.willfp.eco.core.gui.menu.Menu
 import com.willfp.eco.core.gui.slot.Slot
-import com.willfp.eco.core.integrations.placeholder.PlaceholderManager
 import com.willfp.eco.core.placeholder.context.placeholderContext
+import com.willfp.eco.core.placeholder.translatePlaceholders
 import com.willfp.ecomenus.slots.SlotFunction
 import com.willfp.ecomenus.slots.SlotType
 import com.willfp.libreforge.ViolationContext
@@ -30,10 +30,7 @@ class CommandSlotFunction(
         for (command in commands) {
             Bukkit.dispatchCommand(
                 sender ?: player,
-                PlaceholderManager.translatePlaceholders(
-                    command.replace("%player%", player.name),
-                    placeholderContext(player = player)
-                )
+                command.translatePlaceholders(placeholderContext(player = player))
             )
         }
     }

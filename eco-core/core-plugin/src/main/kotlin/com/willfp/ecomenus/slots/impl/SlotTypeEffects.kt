@@ -32,21 +32,7 @@ object SlotTypeEffects : SlotType("effects") {
         private val chain: Chain
     ) : SlotFunction {
         override fun execute(player: Player, event: InventoryClickEvent, slot: Slot, menu: Menu) {
-            chain.trigger(
-                DispatchedTrigger(
-                    player,
-                    TriggerClickSlot,
-                    TriggerData(
-                        player = player
-                    )
-                )
-            )
+            chain.trigger(player)
         }
-    }
-
-    private object TriggerClickSlot : Trigger("click_slot") {
-        override val parameters = setOf(
-            TriggerParameter.PLAYER
-        )
     }
 }

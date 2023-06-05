@@ -11,6 +11,8 @@ import com.willfp.eco.core.gui.slot
 import com.willfp.eco.core.gui.slot.Slot
 import com.willfp.eco.core.items.Items
 import com.willfp.eco.core.placeholder.context.placeholderContext
+import com.willfp.eco.core.placeholder.findPlaceholders
+import com.willfp.eco.core.placeholder.translatePlaceholders
 import com.willfp.ecomenus.slots.SlotTypes
 import com.willfp.libreforge.ConfigViolation
 import com.willfp.libreforge.EmptyProvidedHolder
@@ -40,10 +42,23 @@ class ConfigurableSlot(
 
     private val showIfNotMet = config.getBool("show-if-not-met")
 
+    private val itemLookupString = config.getString("item")
+
+    private val isDynamicBaseItem = itemLookupString.findPlaceholders().isNotEmpty()
+
     private val baseItem = Items.lookup(config.getString("item")).item
 
     private val slot = slot({ player, _ ->
-        baseItem.clone().fast().apply {
+        val item = if (isDynamicBaseItem) {
+            Items.lookup(
+                itemLookupString
+                    .translatePlaceholders(placeholderContext(player = player))
+            ).item
+        } else {
+            baseItem
+        }
+
+        item.clone().fast().apply {
             if (config.has("lore")) {
                 this.lore = config.getFormattedStrings(
                     "lore", placeholderContext(

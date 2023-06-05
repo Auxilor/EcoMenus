@@ -8,6 +8,8 @@ import com.willfp.ecomenus.commands.DynamicMenuCommand
 import com.willfp.libreforge.EmptyProvidedHolder
 import com.willfp.libreforge.ViolationContext
 import com.willfp.libreforge.conditions.Conditions
+import com.willfp.libreforge.effects.Effects
+import com.willfp.libreforge.effects.executors.impl.NormalExecutorFactory
 import org.bukkit.entity.Player
 
 class EcoMenu(
@@ -21,10 +23,22 @@ class EcoMenu(
 
     private val conditions = Conditions.compile(
         config.getSubsections("conditions"),
-        ViolationContext(plugin, "Menu $id conditions")
+        ViolationContext(plugin, "menu $id conditions")
     )
 
     private val cannotOpenMessages = config.getFormattedStrings("cannot-open-messages")
+
+    private val openEffects = Effects.compileChain(
+        config.getSubsections("open-effects"),
+        NormalExecutorFactory.create(),
+        ViolationContext(plugin, "menu $id open effects")
+    )
+
+    private val closeEffects = Effects.compileChain(
+        config.getSubsections("close-effects"),
+        NormalExecutorFactory.create(),
+        ViolationContext(plugin, "menu $id close effects")
+    )
 
     init {
         if (commandName != null) {
@@ -45,5 +59,11 @@ class EcoMenu(
 
     fun forceOpen(player: Player, parent: Menu? = null) {
         menu.open(player, parent)
+        openEffects?.trigger(player)
+    }
+
+    fun handleClose(player: Player) {
+        closeEffects?.trigger(player)
+        menu.previousMenus[player].popOrNull()?.open(player)
     }
 }

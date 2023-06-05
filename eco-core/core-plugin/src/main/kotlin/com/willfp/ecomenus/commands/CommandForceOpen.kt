@@ -20,7 +20,7 @@ class CommandForceOpen(plugin: EcoPlugin) : Subcommand(
 
         menu.forceOpen(player)
         sender.sendMessage(
-            plugin.langYml.getMessage("opened", StringUtils.FormatOption.WITHOUT_PLACEHOLDERS)
+            plugin.langYml.getMessage("opened")
                 .replace("%player%", player.savedDisplayName)
                 .replace("%menu%", menu.id)
         )
