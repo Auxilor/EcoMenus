@@ -41,7 +41,6 @@ fun buildMenu(plugin: EcoPlugin, menu: EcoMenu, config: Config): Menu {
 
     for (slotConfig in config.getSubsections("slots")) {
         val slot = ConfigurableSlot(
-            plugin,
             ViolationContext(plugin, "menu ${menu.id}"),
             slotConfig
         )

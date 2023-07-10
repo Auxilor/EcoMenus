@@ -1,6 +1,5 @@
 package com.willfp.ecomenus.components
 
-import com.willfp.eco.core.EcoPlugin
 import com.willfp.eco.core.config.interfaces.Config
 import com.willfp.eco.core.fast.fast
 import com.willfp.eco.core.gui.menu.Menu
@@ -13,16 +12,16 @@ import com.willfp.eco.core.items.Items
 import com.willfp.eco.core.placeholder.context.placeholderContext
 import com.willfp.eco.core.placeholder.findPlaceholders
 import com.willfp.eco.core.placeholder.translatePlaceholders
-import com.willfp.ecomenus.slots.SlotTypes
 import com.willfp.libreforge.ConfigViolation
 import com.willfp.libreforge.EmptyProvidedHolder
 import com.willfp.libreforge.ViolationContext
 import com.willfp.libreforge.conditions.Conditions
+import com.willfp.libreforge.effects.Effects
+import com.willfp.libreforge.effects.executors.impl.NormalExecutorFactory
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.ClickType
 
 class ConfigurableSlot(
-    private val plugin: EcoPlugin,
     baseContext: ViolationContext,
     private val config: Config
 ) : PositionedComponent {
@@ -74,19 +73,17 @@ class ConfigurableSlot(
     }) {
         for (clickType in ClickType.values()) {
             val section = "${clickType.name.lowercase().replace("_", "-")}-click"
-            val actions = config.getSubsections(section)
 
-            for (action in actions) {
-                val typeName = action.getString("type")
-                val type = SlotTypes[typeName] ?: continue
+            val effects = Effects.compileChain(
+                config.getSubsections(section),
+                NormalExecutorFactory.create(),
+                context.with(section)
+            ) ?: continue
 
-                val function = type.create(
-                    action,
-                    plugin,
-                    context.with(section).with(typeName)
-                )?.toSlotAction(conditions) ?: continue
-
-                onClick(clickType, function)
+            onClick(clickType) { player, _, _, _ ->
+                if (conditions.areMet(player, EmptyProvidedHolder)) {
+                    effects.trigger(player)
+                }
             }
         }
     }

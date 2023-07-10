@@ -102,22 +102,14 @@ slots:
     # If the item should be shown if the conditions are not met
     show-if-not-met: false
 
+    # Read https://plugins.auxilor.io/effects/configuring-an-effect
+    # The effects ran when the item is clicked
     left-click:
-      - type: effects
-        effects:
-          - id: send_message
-            args:
-              message: "&cYou clicked the close button!"
+      - id: send_message
+        args:
+          message: "&cYou clicked the close button!"
 
-      - type: close
-        commands: [ ]
-
-      - type: menu
-        menu: other_example_menu
-
-      - type: console_command
-        commands:
-          - "eco give %player% 100"
+      - id: close_inventory
 
   - item: player_head head:%player% name:"&f%player%"
     location:
@@ -125,10 +117,11 @@ slots:
       column: 5
       page: 1
 
-    left-click:
-      - type: menu
-        menu: other_example_menu
+    shift-right-click:
+      - id: open_menu
+        args:
+          menu: other_example_menu
 
-      - type: console_command
-        commands:
-          - "eco give %player% 100"
+      - id: run_command
+        args:
+          command: "eco give %player% 100"
