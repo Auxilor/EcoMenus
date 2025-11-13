@@ -10,6 +10,7 @@ import com.willfp.libreforge.ViolationContext
 import com.willfp.libreforge.conditions.Conditions
 import com.willfp.libreforge.effects.Effects
 import com.willfp.libreforge.effects.executors.impl.NormalExecutorFactory
+import com.willfp.libreforge.toDispatcher
 import org.bukkit.entity.Player
 
 class EcoMenu(
@@ -20,6 +21,8 @@ class EcoMenu(
     private val menu = buildMenu(plugin, this, config)
 
     private val commandName = config.getStringOrNull("command")
+
+    private var menuCommand: DynamicMenuCommand? = null
 
     private val conditions = Conditions.compile(
         config.getSubsections("conditions"),
@@ -42,12 +45,16 @@ class EcoMenu(
 
     init {
         if (commandName != null) {
-            DynamicMenuCommand(plugin, this, commandName).register()
+            menuCommand = DynamicMenuCommand(plugin, this, commandName)
         }
     }
 
+    fun registerCommand() {
+        menuCommand?.register()
+    }
+
     fun open(player: Player, parent: Menu? = null) {
-        if (!conditions.areMet(player, EmptyProvidedHolder)) {
+        if (!conditions.areMet(player.toDispatcher(), EmptyProvidedHolder)) {
             for (message in cannotOpenMessages) {
                 player.sendMessage(message)
             }
@@ -59,11 +66,11 @@ class EcoMenu(
 
     fun forceOpen(player: Player, parent: Menu? = null) {
         menu.open(player, parent)
-        openEffects?.trigger(player)
+        openEffects?.trigger(player.toDispatcher())
     }
 
     fun handleClose(player: Player) {
-        closeEffects?.trigger(player)
+        closeEffects?.trigger(player.toDispatcher())
         menu.previousMenus[player].popOrNull()?.open(player)
     }
 }
