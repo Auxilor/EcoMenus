@@ -13,7 +13,7 @@ object EcoMenus : ConfigCategory("menu", "menus") {
     }
 
     override fun acceptConfig(plugin: LibreforgePlugin, id: String, config: Config) {
-        registry.register(EcoMenu(plugin, id, config))
+        registry.register(EcoMenu(id, config))
     }
 
     fun values(): Collection<EcoMenu> {

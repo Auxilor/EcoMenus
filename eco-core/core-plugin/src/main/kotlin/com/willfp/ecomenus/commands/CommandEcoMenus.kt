@@ -1,19 +1,19 @@
 package com.willfp.ecomenus.commands
 
-import com.willfp.eco.core.EcoPlugin
 import com.willfp.eco.core.command.impl.PluginCommand
+import com.willfp.ecomenus.plugin
 import org.bukkit.command.CommandSender
 
-class CommandEcoMenus(plugin: EcoPlugin) : PluginCommand(
+object CommandEcoMenus : PluginCommand(
     plugin,
     "ecomenus",
     "ecomenus.command.ecomenus",
     false
 ) {
     init {
-        this.addSubcommand(CommandReload(plugin))
-            .addSubcommand(CommandOpen(plugin))
-            .addSubcommand(CommandForceOpen(plugin))
+        this.addSubcommand(CommandReload)
+            .addSubcommand(CommandOpen)
+            .addSubcommand(CommandForceOpen)
     }
 
     override fun onExecute(sender: CommandSender, args: List<String>) {
