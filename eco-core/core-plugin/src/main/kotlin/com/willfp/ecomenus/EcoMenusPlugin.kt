@@ -9,7 +9,14 @@ import com.willfp.libreforge.effects.Effects
 import com.willfp.libreforge.loader.LibreforgePlugin
 import com.willfp.libreforge.loader.configs.ConfigCategory
 
+internal lateinit var plugin: EcoMenusPlugin
+    private set
+
 class EcoMenusPlugin : LibreforgePlugin() {
+    init {
+        plugin = this
+    }
+
     override fun handleEnable() {
         Effects.register(EffectOpenMenu)
         Effects.register(EffectResetPreviousMenu)
@@ -17,7 +24,7 @@ class EcoMenusPlugin : LibreforgePlugin() {
 
     override fun loadPluginCommands(): List<PluginCommand> {
         return listOf(
-            CommandEcoMenus(this)
+            CommandEcoMenus
         )
     }
 

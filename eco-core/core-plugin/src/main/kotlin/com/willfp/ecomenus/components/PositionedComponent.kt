@@ -1,7 +1,6 @@
 package com.willfp.ecomenus.components
 
 import com.willfp.eco.core.gui.GUIComponent
-import com.willfp.eco.core.gui.menu.MenuBuilder
 import com.willfp.eco.core.gui.menu.MenuLayer
 import com.willfp.eco.core.gui.page.PageBuilder
 

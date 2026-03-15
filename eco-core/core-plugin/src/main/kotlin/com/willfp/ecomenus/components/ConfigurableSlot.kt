@@ -18,6 +18,7 @@ import com.willfp.libreforge.ViolationContext
 import com.willfp.libreforge.conditions.Conditions
 import com.willfp.libreforge.effects.Effects
 import com.willfp.libreforge.effects.executors.impl.NormalExecutorFactory
+import com.willfp.libreforge.toDispatcher
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.ClickType
 
@@ -66,12 +67,12 @@ class ConfigurableSlot(
                 )
             }
 
-            if (!conditions.areMet(player, EmptyProvidedHolder)) {
-                this.lore = this.lore + conditions.getNotMetLines(player, EmptyProvidedHolder)
+            if (!conditions.areMet(player.toDispatcher(), EmptyProvidedHolder)) {
+                this.lore = this.lore + conditions.getNotMetLines(player.toDispatcher(), EmptyProvidedHolder)
             }
         }.unwrap()
     }) {
-        for (clickType in ClickType.values()) {
+        for (clickType in ClickType.entries) {
             val section = "${clickType.name.lowercase().replace("_", "-")}-click"
 
             val effects = Effects.compileChain(
@@ -81,15 +82,15 @@ class ConfigurableSlot(
             ) ?: continue
 
             onClick(clickType) { player, _, _, _ ->
-                if (conditions.areMet(player, EmptyProvidedHolder)) {
-                    effects.trigger(player)
+                if (conditions.areMet(player.toDispatcher(), EmptyProvidedHolder)) {
+                    effects.trigger(player.toDispatcher())
                 }
             }
         }
     }
 
     override fun getSlotAt(row: Int, column: Int, player: Player, menu: Menu): Slot? {
-        if (!showIfNotMet && !conditions.areMet(player, EmptyProvidedHolder)) {
+        if (!showIfNotMet && !conditions.areMet(player.toDispatcher(), EmptyProvidedHolder)) {
             return null
         }
 
@@ -99,7 +100,7 @@ class ConfigurableSlot(
     fun add(builder: PageBuilder) {
         try {
             builder.addComponent(this)
-        } catch (e: Exception) {
+        } catch (_: Exception) {
             context.log(ConfigViolation("location", "Invalid location!"))
         }
     }
