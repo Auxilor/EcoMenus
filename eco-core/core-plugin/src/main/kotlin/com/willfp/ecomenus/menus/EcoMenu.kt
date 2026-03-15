@@ -63,7 +63,7 @@ class EcoMenu(
     }
 
     fun handleClose(player: Player) {
-        closeEffects?.trigger(player)
+        closeEffects?.trigger(player.toDispatcher())
         val prev = menu.previousMenus[player].popOrNull()
         plugin.scheduler.runLater(1)  {
             if (prev != null && prev != menu) {
