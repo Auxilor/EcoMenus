@@ -54,6 +54,7 @@ allprojects {
 
     tasks {
         shadowJar {
+            exclude("META-INF/**")
             relocate("com.willfp.libreforge.loader", "com.willfp.ecomenus.libreforge.loader")
             relocate("com.willfp.ecomponent", "com.willfp.ecomenus.ecomponent")
             relocate("kotlin", "com.willfp.eco.libs.kotlin")
