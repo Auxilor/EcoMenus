@@ -9,6 +9,7 @@ object EcoMenus : ConfigCategory("menu", "menus") {
     private val registry = Registry<EcoMenu>()
 
     override fun clear(plugin: LibreforgePlugin) {
+        registry.values().forEach { it.dispose() }
         registry.clear()
     }
 
