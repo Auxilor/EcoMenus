@@ -19,7 +19,7 @@ class PositionedPageChanger(
 
     override val row: Int = config.getInt("location.row")
     override val column: Int = config.getInt("location.column")
-    override val layer = MenuLayer.TOP
+    override val layer: Int = MenuLayer.TOP
 
     override val isEnabled = config.getBool("enabled")
 

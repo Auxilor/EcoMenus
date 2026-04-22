@@ -30,8 +30,7 @@ class ConfigurableSlot(
     override val column: Int = config.getInt("location.column")
     val page: Int? = config.getIntOrNull("location.page")
 
-    override val layer = runCatching { enumValueOf<MenuLayer>(config.getString("location.layer").uppercase()) }
-        .getOrElse { MenuLayer.MIDDLE }
+    override val layer: Int = config.get("location.layer") as? Int? ?: MenuLayer.MIDDLE
 
     private val context = baseContext.with("slot at row ${row}, column $column, page $page")
 

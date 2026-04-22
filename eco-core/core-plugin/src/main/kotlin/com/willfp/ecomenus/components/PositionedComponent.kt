@@ -16,7 +16,7 @@ interface PositionedComponent : GUIComponent {
     val columnSize: Int
         get() = 1
 
-    val layer: MenuLayer
+    val layer: Int
         get() = MenuLayer.MIDDLE
 
     override fun getRows() = rowSize
