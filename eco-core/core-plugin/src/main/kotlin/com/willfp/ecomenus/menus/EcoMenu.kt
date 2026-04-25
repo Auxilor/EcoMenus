@@ -3,6 +3,7 @@ package com.willfp.ecomenus.menus
 import com.willfp.eco.core.config.interfaces.Config
 import com.willfp.eco.core.gui.menu.Menu
 import com.willfp.eco.core.registry.KRegistrable
+import com.willfp.eco.core.scheduling.EcoWrappedTask
 import com.willfp.eco.util.openMenu
 import com.willfp.ecomenus.commands.DynamicMenuCommand
 import com.willfp.ecomenus.plugin
@@ -46,14 +47,14 @@ class EcoMenu(
     private val refreshEnabled = config.getBool("refresh.enabled")
     private val refreshInterval = config.getInt("refresh.interval").toLong().coerceAtLeast(1)
 
-    private var refreshTask: BukkitTask? = null
+    private var refreshTask: EcoWrappedTask? = null
 
     init {
         if (commandName != null) {
             DynamicMenuCommand(this, commandName).register()
         }
         if (refreshEnabled) {
-            refreshTask = plugin.scheduler.runTimer(refreshInterval, refreshInterval) {
+            refreshTask = plugin.scheduler.runTaskTimer(refreshInterval, refreshInterval) {
                 Bukkit.getOnlinePlayers()
                     .filter { it.openMenu == menu }
                     .forEach { menu.refresh(it) }
@@ -62,7 +63,7 @@ class EcoMenu(
     }
 
     fun dispose() {
-        refreshTask?.cancel()
+        refreshTask?.cancelTask()
     }
 
     fun open(player: Player, parent: Menu? = null) {
@@ -84,7 +85,7 @@ class EcoMenu(
     fun handleClose(player: Player) {
         closeEffects?.trigger(player.toDispatcher())
         val prev = menu.previousMenus[player].popOrNull()
-        plugin.scheduler.runLater(1) {
+        plugin.scheduler.runTaskLater(1) {
             if (prev != null && prev != menu) {
                 prev.open(player)
             }
