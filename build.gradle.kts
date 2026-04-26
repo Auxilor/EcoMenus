@@ -39,7 +39,7 @@ allprojects {
     }
 
     dependencies {
-        implementation("com.willfp:ecomponent:1.4.1")
+        implementation("com.willfp:ecomponent:1.5.0")
 
         compileOnly("com.willfp:eco:7.4.0")
         compileOnly("org.jetbrains:annotations:26.0.2")
