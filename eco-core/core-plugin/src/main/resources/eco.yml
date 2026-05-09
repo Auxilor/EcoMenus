@@ -3,7 +3,7 @@ environment:
     value: ${libreforgeVersion}
 
 options:
-  bstats-id: 0
+  bstats-id: 31230
   resource-id: 0
   color: "&#AA96DA"
   uses-reflective-reload: false
