@@ -1,5 +1,6 @@
 package com.willfp.ecomenus
 
+import com.willfp.eco.core.bstats.EcoMetricsChart
 import com.willfp.eco.core.command.impl.PluginCommand
 import com.willfp.ecomenus.commands.CommandEcoMenus
 import com.willfp.ecomenus.libreforge.EffectOpenMenu
@@ -33,4 +34,8 @@ class EcoMenusPlugin : LibreforgePlugin() {
             EcoMenus
         )
     }
+
+    override fun getCustomCharts() = listOf(
+        EcoMetricsChart.SingleLine("total_menus") { EcoMenus.values().size }
+    )
 }
