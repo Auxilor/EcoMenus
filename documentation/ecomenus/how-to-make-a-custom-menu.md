@@ -1,4 +1,4 @@
----
+﻿---
 title: How to make a Menu
 sidebar_position: 1
 ---
@@ -123,7 +123,7 @@ refresh: # Whether to automatically refresh (re-render) this menu for viewers.
 ```
 
 ### The Open/Close Section
-:::dangerEffects Section
+:::danger Effects Section
 
 The effects section is the core functionality of the menu. You can configure effects, conditions, and filters in this section to run when the menu is opened or closed.
 
@@ -191,7 +191,7 @@ pages:
 ```
 
 ### The Slots Section
-:::dangerEffects Section
+:::danger Effects Section
 
 The effects section is the core functionality of the menu. You can configure effects, conditions, and filters in this section to run when the slot is clicked.
 
