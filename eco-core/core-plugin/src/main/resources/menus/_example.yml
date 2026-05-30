@@ -88,46 +88,27 @@ pages:
         - "211101112"
 
 slots:
-  - item: barrier name:"&cClose"
-    lore: [ ]
-    location:
+  - item: barrier name:"&cClose" # Item lookup: https://plugins.auxilor.io/the-item-lookup-system
+    lore: [ ] # (Optional) The lore of the slot item.
+    location: # The location of the item in the GUI
       row: 6
       column: 5
-      page: 1 # If you don't specify a page, it will be on all pages
-
-      # (Optional) You can specify the layer of the slot.
-      # The layer can be any of: lower, middle, upper, or top (defaults to middle)
-      # This is useful if you want to have a slot on top of another slot, and
-      # have the upper slot show if some conditions are met.
-      layer: middle
-
-    # Read https://plugins.auxilor.io/effects/configuring-a-condition
-    # The conditions required to click the item
-    conditions: [ ]
-
-    # If the item should be shown if the conditions are not met
-    show-if-not-met: false
-
-    # Read https://plugins.auxilor.io/effects/configuring-an-effect
-    # The effects ran when the item is clicked
+      page: 1
+      layer: 2 # (Optional) The layer of the item. Higher layers are rendered on top of lower layers, allowing you to have multiple items in the same slot and show/hide them based on conditions.
+    conditions: [ ] # Conditions required for the item to show and be clickable - use this with layers to show items based on conditions!
+    show-if-not-met: false # Whether to show the item if conditions are not met. If true, the item will show but be unclickable.
     left-click:
-      - id: send_message
-        args:
-          message: "&cYou clicked the close button!"
-
       - id: close_inventory
+    right-click: []
+    shift-left-click: []
+    shift-right-click: []
 
   - item: player_head head:%player% name:"&f%player%"
     location:
       row: 1
       column: 5
       page: 1
-
-    shift-right-click:
+    shift-right-click: # Effects when shift-right-clicking the item
       - id: open_menu
         args:
-          menu: other_example_menu
-
-      - id: run_command
-        args:
-          command: "eco give %player% 100"
+          menu: another_menu

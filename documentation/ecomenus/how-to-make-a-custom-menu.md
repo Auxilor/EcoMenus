@@ -85,7 +85,7 @@ slots:
       row: 6
       column: 5
       page: 1
-      layer: middle
+      layer: 2
 
     conditions: [ ]
     show-if-not-met: false
@@ -208,7 +208,7 @@ slots:
       row: 6
       column: 5
       page: 1
-      layer: middle # (Optional) lower, middle, upper, top
+      layer: 2 # (Optional) The layer of the item. Higher layers are rendered on top of lower layers, allowing you to have multiple items in the same slot and show/hide them based on conditions.
     conditions: [ ] # Conditions required for the item to show and be clickable - use this with layers to show items based on conditions!
     show-if-not-met: false # Whether to show the item if conditions are not met. If true, the item will show but be unclickable.
     left-click: 
