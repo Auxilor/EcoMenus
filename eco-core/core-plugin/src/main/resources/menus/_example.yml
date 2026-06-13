@@ -5,7 +5,8 @@
 # _example.yml is not loaded.
 
 # The title of the GUI
-title: "Example GUI"
+# %page% and %max_page% can be used to show the current and total page numbers
+title: "Example GUI (%page%/%max_page%)"
 
 # (Optional) The command to open the GUI, if not set, there will be no command.
 command: examplemenu
@@ -36,9 +37,12 @@ refresh:
 
 # Options for the page arrows
 # If on the first page, the backwards arrow will not be shown,
-# and if on the last page, the forwards arrow will not be shown.
+# and if on the last page, the forwards arrow will not be shown,
+# unless item-inactive is configured, in which case it shows that instead.
+# %page% and %max_page% can be used in the item names.
 forwards-arrow:
   item: arrow name:"&fNext Page"
+  item-inactive: gray_dye name:"&7Next Page"
   enabled: true
   location:
     row: 6
@@ -46,10 +50,19 @@ forwards-arrow:
 
 backwards-arrow:
   item: arrow name:"&fPrevious Page"
+  item-inactive: gray_dye name:"&7Previous Page"
   enabled: true
   location:
     row: 6
     column: 2
+
+# The sound to play when the page is changed
+# Leave this section out to play no sound
+page-change-sound:
+  enabled: true
+  sound: ui.button.click
+  pitch: 1.0
+  volume: 1.0
 
 pages:
   - page: 1
