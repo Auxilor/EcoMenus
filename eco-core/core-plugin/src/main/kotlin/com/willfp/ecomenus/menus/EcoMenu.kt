@@ -48,9 +48,11 @@ class EcoMenu(
 
     private var refreshTask: BukkitTask? = null
 
+    private var command: DynamicMenuCommand? = null
+
     init {
         if (commandName != null) {
-            DynamicMenuCommand(this, commandName).register()
+            command = DynamicMenuCommand(this, commandName).apply { register() }
         }
         if (refreshEnabled) {
             refreshTask = plugin.scheduler.runTimer(refreshInterval, refreshInterval) {
@@ -63,6 +65,7 @@ class EcoMenu(
 
     fun dispose() {
         refreshTask?.cancel()
+        command?.unregister()
     }
 
     fun open(player: Player, parent: Menu? = null) {
