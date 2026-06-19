@@ -3,14 +3,15 @@ package com.willfp.ecomenus.menus
 import com.willfp.eco.core.EcoPlugin
 import com.willfp.eco.core.config.interfaces.Config
 import com.willfp.eco.core.gui.addPage
+import com.willfp.eco.core.gui.addPageChanger
 import com.willfp.eco.core.gui.menu
 import com.willfp.eco.core.gui.menu.Menu
 import com.willfp.eco.core.gui.page.PageChanger
 import com.willfp.eco.core.gui.slot.FillerMask
 import com.willfp.eco.core.gui.slot.MaskItems
+import com.willfp.eco.core.sound.PlayableSound
 import com.willfp.ecomenus.components.ConfigurableSlot
 import com.willfp.ecomenus.components.addComponent
-import com.willfp.ecomenus.components.impl.PositionedPageChanger
 import com.willfp.ecomponent.menuStateVar
 import com.willfp.libreforge.ViolationContext
 import org.bukkit.entity.Player
@@ -48,6 +49,8 @@ fun buildMenu(plugin: EcoPlugin, menu: EcoMenu, config: Config): Menu {
         slots += slot
     }
 
+    val pageChangeSound = PlayableSound.create(config.getSubsection("page-change-sound"))
+
     return menu(config.getInt("rows")) {
         title = config.getFormattedString("title")
 
@@ -55,19 +58,13 @@ fun buildMenu(plugin: EcoPlugin, menu: EcoMenu, config: Config): Menu {
 
         maxPages(pageConfigs.size)
 
-        addComponent(
-            PositionedPageChanger(
-                PageChanger.Direction.FORWARDS,
-                config.getSubsection("forwards-arrow")
-            )
-        )
+        if (config.getBool("forwards-arrow.enabled")) {
+            addPageChanger(config, "forwards-arrow", PageChanger.Direction.FORWARDS, pageChangeSound)
+        }
 
-        addComponent(
-            PositionedPageChanger(
-                PageChanger.Direction.BACKWARDS,
-                config.getSubsection("backwards-arrow")
-            )
-        )
+        if (config.getBool("backwards-arrow.enabled")) {
+            addPageChanger(config, "backwards-arrow", PageChanger.Direction.BACKWARDS, pageChangeSound)
+        }
 
         for (page in pageConfigs) {
             val mask = FillerMask(
