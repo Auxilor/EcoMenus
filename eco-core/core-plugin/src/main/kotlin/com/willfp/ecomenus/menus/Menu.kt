@@ -28,7 +28,11 @@ fun Menu.open(
 ) {
     this.open(player)
     if (from != null) {
-        this.previousMenus[player] += from
+        // getState reads from the now-current RenderedInventory for this menu.
+        // If null, create and store a new Stack so we never mutate the shared default instance.
+        val stack = this.getState<Stack<Menu>>(player, "previous-menu")
+            ?: Stack<Menu>().also { this.setState(player, "previous-menu", it) }
+        stack.push(from)
     }
 }
 

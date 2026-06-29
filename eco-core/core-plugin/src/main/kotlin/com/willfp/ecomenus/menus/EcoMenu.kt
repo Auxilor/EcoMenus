@@ -86,6 +86,11 @@ class EcoMenu(
 
     fun handleClose(player: Player) {
         closeEffects?.trigger(player.toDispatcher())
+        // If another eco menu is being force-opened, this close was triggered by explicit
+        // navigation (e.g. open_menu effect). forceRenderedInventory already points to the
+        // new menu, so player.openMenu != menu. Skip the auto-back in that case.
+        val openMenu = player.openMenu
+        if (openMenu != null && openMenu != menu) return
         val prev = menu.previousMenus[player].popOrNull()
         plugin.scheduler.runLater(1) {
             if (prev != null && prev != menu) {
