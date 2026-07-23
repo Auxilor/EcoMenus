@@ -20,7 +20,7 @@ A **menu** is a config-driven GUI that players open with a command or another me
 
 ## Naming and IDs
 
-The file name without `.yml` is the menu's **ID**: `store.yml` has the ID `store`. You use that ID in `/ecomenus open`, `/ecomenus forceopen`, and the `open_menu` effect. Slot items are resolved through the [Item Lookup System](https://plugins.auxilor.io/the-item-lookup-system), so any item string that works elsewhere in eco works here too.
+The file name without `.yml` is the menu's **ID**: `store.yml` has the ID `store`. You use that ID in `/ecomenus open`, `/ecomenus forceopen`, and the `open_menu` effect. Slot items are resolved through the [Item Lookup System](https://hub.auxilor.io/wiki/eco/the-item-lookup-system-the-item-lookup-system), so any item string that works elsewhere in eco works here too.
 
 :::warning ID rules
 IDs may only contain lowercase letters, numbers, and underscores (a-z, 0-9, _). No spaces, capitals, or hyphens, or the menu will not load.
@@ -131,8 +131,8 @@ close-effects: [ ] # Run once when the menu closes
 :::danger Effects are their own system
 Effects, conditions, and chains are a shared libreforge system, documented in full elsewhere:
 
-- [Configuring an Effect](https://plugins.auxilor.io/effects/configuring-an-effect)
-- [Configuring an Effect Chain](https://plugins.auxilor.io/effects/configuring-a-chain)
+- [Configuring an Effect](https://hub.auxilor.io/wiki/libreforge/configuring-an-effect)
+- [Configuring an Effect Chain](https://hub.auxilor.io/wiki/libreforge/configuring-a-chain)
 :::
 
 ### Page arrows
@@ -175,7 +175,7 @@ pages:
 ```
 
 :::info How masks fill slots
-The mask is the background layer. Any slot left as `0`, or covered by a higher-layer slot, shows the slot item instead. See [Pages](https://plugins.auxilor.io/all-plugins/pages) for the full system.
+The mask is the background layer. Any slot left as `0`, or covered by a higher-layer slot, shows the slot item instead. See [Pages](https://hub.auxilor.io/wiki/eco/pages) for the full system.
 :::
 
 ### Slots
@@ -229,7 +229,7 @@ With your slots in place the menu is complete, so reload and open it to test. If
 
 ## Where to go next
 
-- **Effects and conditions:** [Configuring an Effect](https://plugins.auxilor.io/effects/configuring-an-effect) and [Configuring a Chain](https://plugins.auxilor.io/effects/configuring-a-chain) for everything a click can do.
-- **Items:** the [Item Lookup System](https://plugins.auxilor.io/the-item-lookup-system) for crafting your slot items.
+- **Effects and conditions:** [Configuring an Effect](https://hub.auxilor.io/wiki/libreforge/configuring-an-effect) and [Configuring a Chain](https://hub.auxilor.io/wiki/libreforge/configuring-a-chain) for everything a click can do.
+- **Items:** the [Item Lookup System](https://hub.auxilor.io/wiki/eco/the-item-lookup-system-the-item-lookup-system) for crafting your slot items.
 - **Commands:** [Commands and Permissions](commands-and-permissions) to open menus and gate access.
 - **Defaults:** the shipped [`_example.yml`](https://github.com/Auxilor/EcoMenus/tree/master/eco-core/core-plugin/src/main/resources/menus) as a starting point.

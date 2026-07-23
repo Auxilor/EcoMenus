@@ -14,7 +14,7 @@ command: examplemenu
 # The size of the GUI, between 1 and 6
 rows: 6
 
-# Read https://plugins.auxilor.io/effects/configuring-a-condition
+# Read https://hub.auxilor.io/wiki/libreforge/configuring-a-condition
 # The conditions required to open the GUI
 conditions: [ ]
 
@@ -22,7 +22,7 @@ conditions: [ ]
 cannot-open-messages:
   - "&cYou cannot open this menu!"
 
-# Read https://plugins.auxilor.io/effects/configuring-an-effect
+# Read https://hub.auxilor.io/wiki/libreforge/configuring-an-effect
 # Effects to run when the GUI is opened
 open-effects: [ ]
 
@@ -101,7 +101,7 @@ pages:
         - "211101112"
 
 slots:
-  - item: barrier name:"&cClose" # Item lookup: https://plugins.auxilor.io/the-item-lookup-system
+  - item: barrier name:"&cClose" # Item lookup: https://hub.auxilor.io/wiki/eco/the-item-lookup-system-the-item-lookup-system
     lore: [ ] # (Optional) The lore of the slot item.
     location: # The location of the item in the GUI
       row: 6
