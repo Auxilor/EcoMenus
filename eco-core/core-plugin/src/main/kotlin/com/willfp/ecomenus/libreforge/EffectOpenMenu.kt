@@ -24,7 +24,8 @@ object EffectOpenMenu : Effect<NoCompileData>("open_menu") {
             "menu",
             "You must specify the menu ID!",
             description = "The ID of the menu to open for the player.",
-            type = ArgType.STRING
+            type = ArgType.STRING,
+            example = "shop"
         )
     }
 
