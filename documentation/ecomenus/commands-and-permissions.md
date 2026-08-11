@@ -1,6 +1,6 @@
 ---
 title: "Commands and Permissions"
-sidebar_position: 4
+sidebar_position: 2
 ---
 
 EcoMenus adds one base command for opening and managing menus, plus an optional per-menu command. This page lists every command and the permission node that gates it.

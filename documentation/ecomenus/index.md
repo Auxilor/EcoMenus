@@ -22,4 +22,3 @@ It is built on libreforge, so every click, open, and close can run effects and c
 - **Build a menu:** [How to Make a Custom Menu](how-to-make-a-custom-menu) walks you through your first menu start to finish.
 - **Commands:** [Commands and Permissions](commands-and-permissions) lists every command and permission node.
 - **Configuration:** [Plugin Config](plugin-config) covers the global `config.yml`.
-- **Developers:** the [API](api) page shows how to hook into EcoMenus.

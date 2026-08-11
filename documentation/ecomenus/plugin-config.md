@@ -1,6 +1,6 @@
 ---
 title: "Plugin Config"
-sidebar_position: 5
+sidebar_position: 3
 ---
 
 EcoMenus is configured almost entirely through individual menu files; the global `config.yml`, at `/plugins/EcoMenus/config.yml`, has no options to set. After any change, run `/ecomenus reload` to apply it.
