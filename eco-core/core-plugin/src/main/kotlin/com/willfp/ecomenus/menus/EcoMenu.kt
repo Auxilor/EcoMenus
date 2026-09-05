@@ -3,6 +3,7 @@ package com.willfp.ecomenus.menus
 import com.willfp.eco.core.config.interfaces.Config
 import com.willfp.eco.core.gui.menu.Menu
 import com.willfp.eco.core.registry.KRegistrable
+import com.willfp.eco.core.scheduling.EcoTask
 import com.willfp.eco.util.openMenu
 import com.willfp.ecomenus.commands.DynamicMenuCommand
 import com.willfp.ecomenus.plugin
@@ -14,7 +15,6 @@ import com.willfp.libreforge.effects.executors.impl.NormalExecutorFactory
 import com.willfp.libreforge.toDispatcher
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
-import org.bukkit.scheduler.BukkitTask
 
 class EcoMenu(
     override val id: String,
@@ -46,7 +46,7 @@ class EcoMenu(
     private val refreshEnabled = config.getBool("refresh.enabled")
     private val refreshInterval = config.getInt("refresh.interval").toLong().coerceAtLeast(1)
 
-    private var refreshTask: BukkitTask? = null
+    private var refreshTask: EcoTask? = null
 
     private var command: DynamicMenuCommand? = null
 
