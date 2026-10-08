@@ -4,6 +4,7 @@ import com.willfp.eco.core.command.impl.Subcommand
 import com.willfp.eco.util.savedDisplayName
 import com.willfp.ecomenus.menus.EcoMenus
 import com.willfp.ecomenus.plugin
+import com.willfp.ecomenus.runOwned
 import org.bukkit.command.CommandSender
 import org.bukkit.util.StringUtil
 
@@ -17,12 +18,14 @@ object CommandForceOpen : Subcommand(
         val menu = notifyNull(EcoMenus[args.getOrNull(0)], "invalid-menu")
         val player = notifyPlayerRequired(args.getOrNull(1), "invalid-player")
 
-        menu.forceOpen(player)
-        sender.sendMessage(
-            plugin.langYml.getMessage("opened")
-                .replace("%player%", player.savedDisplayName)
-                .replace("%menu%", menu.id)
-        )
+        player.runOwned {
+            menu.forceOpen(player)
+            sender.sendMessage(
+                plugin.langYml.getMessage("opened")
+                    .replace("%player%", player.savedDisplayName)
+                    .replace("%menu%", menu.id)
+            )
+        }
     }
 
     override fun tabComplete(sender: CommandSender, args: List<String>): List<String> {

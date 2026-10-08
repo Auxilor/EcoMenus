@@ -7,6 +7,7 @@ import com.willfp.eco.core.scheduling.EcoTask
 import com.willfp.eco.util.openMenu
 import com.willfp.ecomenus.commands.DynamicMenuCommand
 import com.willfp.ecomenus.plugin
+import com.willfp.ecomenus.runOwned
 import com.willfp.libreforge.EmptyProvidedHolder
 import com.willfp.libreforge.ViolationContext
 import com.willfp.libreforge.conditions.Conditions
@@ -55,10 +56,14 @@ class EcoMenu(
             command = DynamicMenuCommand(this, commandName).apply { register() }
         }
         if (refreshEnabled) {
-            refreshTask = plugin.scheduler.runTimer(refreshInterval, refreshInterval) {
-                Bukkit.getOnlinePlayers()
-                    .filter { it.openMenu == menu }
-                    .forEach { menu.refresh(it) }
+            refreshTask = plugin.scheduler.global().runTimer(refreshInterval, refreshInterval) {
+                for (player in Bukkit.getOnlinePlayers()) {
+                    player.runOwned {
+                        if (player.isOnline && player.openMenu == menu) {
+                            menu.refresh(player)
+                        }
+                    }
+                }
             }
         }
     }
@@ -92,7 +97,7 @@ class EcoMenu(
         val openMenu = player.openMenu
         if (openMenu != null && openMenu != menu) return
         val prev = menu.previousMenus[player].popOrNull()
-        plugin.scheduler.runLater(1) {
+        plugin.scheduler.on(player).runLater(1) {
             if (prev != null && prev != menu) {
                 prev.open(player)
             }
