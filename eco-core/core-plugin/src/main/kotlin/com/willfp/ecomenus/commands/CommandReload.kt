@@ -5,6 +5,7 @@ import com.willfp.eco.util.StringUtils
 import com.willfp.eco.util.toNiceString
 import com.willfp.ecomenus.menus.EcoMenus
 import com.willfp.ecomenus.plugin
+import com.willfp.ecomenus.runOnGlobalRegion
 import org.bukkit.command.CommandSender
 
 object CommandReload : Subcommand(
@@ -13,7 +14,7 @@ object CommandReload : Subcommand(
     "ecomenus.command.reload",
     false
 ) {
-    override fun onExecute(sender: CommandSender, args: List<String>) {
+    override fun onExecute(sender: CommandSender, args: List<String>) = runOnGlobalRegion {
         sender.sendMessage(
             plugin.langYml.getMessage("reloaded", StringUtils.FormatOption.WITHOUT_PLACEHOLDERS)
                 .replace("%time%", plugin.reloadWithTime().toNiceString())

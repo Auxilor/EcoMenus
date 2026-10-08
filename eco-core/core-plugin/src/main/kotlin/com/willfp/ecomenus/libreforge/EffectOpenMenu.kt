@@ -3,6 +3,7 @@ package com.willfp.ecomenus.libreforge
 import com.willfp.eco.core.config.interfaces.Config
 import com.willfp.eco.util.openMenu
 import com.willfp.ecomenus.menus.EcoMenus
+import com.willfp.ecomenus.runOwned
 import com.willfp.libreforge.ArgType
 import com.willfp.libreforge.NoCompileData
 import com.willfp.libreforge.arguments
@@ -33,7 +34,10 @@ object EffectOpenMenu : Effect<NoCompileData>("open_menu") {
         val player = data.player ?: return false
 
         val menu = EcoMenus[config.getString("menu")] ?: return false
-        menu.forceOpen(player, player.openMenu)
+
+        player.runOwned {
+            menu.forceOpen(player, player.openMenu)
+        }
 
         return true
     }
