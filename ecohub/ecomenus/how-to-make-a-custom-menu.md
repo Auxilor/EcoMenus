@@ -203,6 +203,24 @@ slots:
           menu: another_menu
 ```
 
+To show the same slot in several places, add a `locations` list. Each entry takes a `row` and `column`, and `page` and `layer` still come from `location`:
+
+```yaml
+slots:
+  - item: barrier name:"&cClose"
+    location:
+      page: 1
+    locations:
+      - row: 6
+        column: 1
+      - row: 6
+        column: 9
+    left-click:
+      - id: close_inventory
+```
+
+The page arrows accept the same `locations` list beside their `location`.
+
 Each slot supports four click handlers, each running its own effects:
 
 | Action | Runs when |
