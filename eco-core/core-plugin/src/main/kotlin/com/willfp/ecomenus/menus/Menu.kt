@@ -11,7 +11,6 @@ import com.willfp.eco.core.gui.slot.FillerMask
 import com.willfp.eco.core.gui.slot.MaskItems
 import com.willfp.eco.core.sound.PlayableSound
 import com.willfp.ecomenus.components.ConfigurableSlot
-import com.willfp.ecomenus.components.addComponent
 import com.willfp.ecomponent.menuStateVar
 import com.willfp.libreforge.ViolationContext
 import org.bukkit.entity.Player
