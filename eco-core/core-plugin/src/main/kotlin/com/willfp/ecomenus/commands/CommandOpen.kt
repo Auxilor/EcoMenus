@@ -20,9 +20,11 @@ object CommandOpen : Subcommand(
         val player = notifyPlayerRequired(args.getOrNull(1), "invalid-player")
 
         player.runOwned {
-            menu.open(player)
             sender.sendMessage(
-                plugin.langYml.getMessage("opened", StringUtils.FormatOption.WITHOUT_PLACEHOLDERS)
+                plugin.langYml.getMessage(
+                    if (menu.open(player)) "opened" else "could-not-open",
+                    StringUtils.FormatOption.WITHOUT_PLACEHOLDERS
+                )
                     .replace("%player%", player.savedDisplayName)
                     .replace("%menu%", menu.id)
             )
