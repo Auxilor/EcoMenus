@@ -223,6 +223,8 @@ With your slots in place the menu is complete, so reload and open it to test. If
 - **`_example.yml` won't open?** It is intentionally never loaded. Copy or rename it to a real menu file first.
 - **A slot item is missing?** Its `conditions` are probably not met. Set `show-if-not-met: true` to keep it visible but unclickable, or check the item string against the Item Lookup System.
 - **Slot hidden behind the background?** Give it a higher `layer` so it renders on top of the mask.
+- **Menu opens empty?** Check the console for a warning about `pages`. A menu needs at least one page under `pages` to show anything.
+- **Console warns about `refresh.interval`?** `refresh` is enabled with no `interval`, or an interval below 1, so the menu refreshes every tick. Set an interval of 1 or more.
 :::
 
 <hr/>
