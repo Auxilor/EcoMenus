@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "findings": [
+    {
+      "code": "U002",
+      "path": "eco-core/core-plugin/src/main/kotlin/com/willfp/ecomenus/menus/Menu.kt",
+      "message": "Unused function `close`"
+    },
+    {
+      "code": "F007",
+      "path": "eco-core/core-plugin/src/main/resources/paper-plugin.yml",
+      "message": "`paper-plugin.yml` is missing `folia-supported: true`"
+    }
+  ]
+}
