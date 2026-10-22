@@ -1,0 +1,25 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues/>
+  <CurrentIssues>
+    <ID>BracesOnIfStatements:PositionedComponent.kt:else</ID>
+    <ID>BracesOnIfStatements:PositionedComponent.kt:if</ID>
+    <ID>CognitiveComplexMethod:Menu.kt:fun buildMenu: Menu</ID>
+    <ID>ExpressionBodySyntax:EcoMenus.kt:EcoMenus$return registry.values()</ID>
+    <ID>IC002:EcoMenu.kt:EcoMenu$// If another eco menu is being force-opened, this close was triggered by explicit</ID>
+    <ID>IC002:Menu.kt:// getState reads from the now-current RenderedInventory for this menu.</ID>
+    <ID>ImplicitUnitReturnType:CommandReload.kt:CommandReload$override fun onExecute</ID>
+    <ID>NullableToStringCall:ConfigurableSlot.kt:ConfigurableSlot$$page</ID>
+    <ID>ReplaceSafeCallChainWithRun:EffectResetPreviousMenu.kt:EffectResetPreviousMenu$player.openMenu?.previousMenus?.get(player)?.clear()</ID>
+    <ID>ReturnCount:EffectOpenMenu.kt:EffectOpenMenu$override fun onTrigger: Boolean</ID>
+    <ID>SpreadOperator:Menu.kt:( MaskItems.fromItemNames(page.getStrings("mask.items")), *page.getStrings("mask.pattern").toTypedArray() )</ID>
+    <ID>UnnamedParameterUse:CommandForceOpen.kt:CommandForceOpen$replace</ID>
+    <ID>UnnamedParameterUse:CommandOpen.kt:CommandOpen$replace</ID>
+    <ID>UnnamedParameterUse:CommandReload.kt:CommandReload$replace</ID>
+    <ID>UnnamedParameterUse:ConfigurableSlot.kt:ConfigurableSlot$ConfigViolation</ID>
+    <ID>UnnamedParameterUse:ConfigurableSlot.kt:ConfigurableSlot$replace</ID>
+    <ID>UnnamedParameterUse:EffectOpenMenu.kt:EffectOpenMenu$require</ID>
+    <ID>UnusedImport:Menu.kt:import com.willfp.ecomenus.components.addComponent</ID>
+    <ID>UnusedPrivateProperty:ConfigurableSlot.kt:ConfigurableSlot$private val config: Config</ID>
+  </CurrentIssues>
+</SmellBaseline>
