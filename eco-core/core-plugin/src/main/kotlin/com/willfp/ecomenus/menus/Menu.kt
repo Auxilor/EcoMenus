@@ -13,6 +13,7 @@ import com.willfp.eco.core.sound.PlayableSound
 import com.willfp.ecomenus.components.ConfigurableSlot
 import com.willfp.ecomenus.components.addComponent
 import com.willfp.ecomponent.menuStateVar
+import com.willfp.libreforge.ConfigViolation
 import com.willfp.libreforge.ViolationContext
 import org.bukkit.entity.Player
 import java.util.Stack
@@ -41,6 +42,12 @@ fun Menu.close(player: Player) =
 
 fun buildMenu(plugin: EcoPlugin, menu: EcoMenu, config: Config): Menu {
     val pageConfigs = config.getSubsections("pages")
+
+    if (pageConfigs.isEmpty()) {
+        ViolationContext(plugin, "menu ${menu.id}").log(
+            ConfigViolation(param = "pages", message = "Menu has no pages, it will open empty!")
+        )
+    }
 
     val slots = mutableListOf<ConfigurableSlot>()
 
