@@ -46,10 +46,13 @@ class EcoMenu(
     )
 
     private val refreshEnabled = config.getBool("refresh.enabled")
-    private val refreshInterval = config.getInt("refresh.interval").also {
-        if (refreshEnabled && it <= 0) {
+    private val refreshInterval = config.getInt("refresh.interval").also { interval ->
+        if (refreshEnabled && interval <= 0) {
             ViolationContext(plugin, "menu $id").log(
-                ConfigViolation("refresh.interval", "Refresh interval must be at least 1, refreshing every tick!")
+                ConfigViolation(
+                    param = "refresh.interval",
+                    message = "Refresh interval must be at least 1, refreshing every tick!"
+                )
             )
         }
     }.toLong().coerceAtLeast(1)
