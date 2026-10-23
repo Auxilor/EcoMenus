@@ -8,6 +8,7 @@ import com.willfp.eco.util.openMenu
 import com.willfp.ecomenus.commands.DynamicMenuCommand
 import com.willfp.ecomenus.plugin
 import com.willfp.ecomenus.runOwned
+import com.willfp.libreforge.ConfigViolation
 import com.willfp.libreforge.EmptyProvidedHolder
 import com.willfp.libreforge.ViolationContext
 import com.willfp.libreforge.conditions.Conditions
@@ -45,7 +46,16 @@ class EcoMenu(
     )
 
     private val refreshEnabled = config.getBool("refresh.enabled")
-    private val refreshInterval = config.getInt("refresh.interval").toLong().coerceAtLeast(1)
+    private val refreshInterval = config.getInt("refresh.interval").also { interval ->
+        if (refreshEnabled && interval <= 0) {
+            ViolationContext(plugin, "menu $id").log(
+                ConfigViolation(
+                    param = "refresh.interval",
+                    message = "Refresh interval must be at least 1, refreshing every tick!"
+                )
+            )
+        }
+    }.toLong().coerceAtLeast(1)
 
     private var refreshTask: EcoTask? = null
 
@@ -73,15 +83,16 @@ class EcoMenu(
         command?.unregister()
     }
 
-    fun open(player: Player, parent: Menu? = null) {
+    fun open(player: Player, parent: Menu? = null): Boolean {
         if (!conditions.areMet(player.toDispatcher(), EmptyProvidedHolder)) {
             for (message in cannotOpenMessages) {
                 player.sendMessage(message)
             }
-            return
+            return false
         }
 
         forceOpen(player, parent)
+        return true
     }
 
     fun forceOpen(player: Player, parent: Menu? = null) {
