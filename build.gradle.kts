@@ -100,8 +100,6 @@ allprojects {
     }
 
     dependencies {
-        implementation("com.willfp:ecomponent:1.5.0")
-
         compileOnly("com.willfp:eco:$ecoVersion")
         compileOnly("org.jetbrains:annotations:26.0.2")
         compileOnly("org.jetbrains.kotlin:kotlin-stdlib:2.3.0")
@@ -116,7 +114,6 @@ allprojects {
         shadowJar {
             exclude("META-INF/**")
             relocate("com.willfp.libreforge.loader", "com.willfp.ecomenus.libreforge.loader")
-            relocate("com.willfp.ecomponent", "com.willfp.ecomenus.ecomponent")
             relocate("kotlin", "com.willfp.eco.libs.kotlin")
             relocate("kotlin.jvm", "com.willfp.eco.libs.kotlin.jvm")
             relocate("kotlin.coroutines", "com.willfp.eco.libs.kotlin.coroutines")

@@ -2,6 +2,10 @@ package com.willfp.ecomenus.components
 
 import com.willfp.eco.core.config.interfaces.Config
 import com.willfp.eco.core.fast.fast
+import com.willfp.eco.core.gui.SlotLocation
+import com.willfp.eco.core.gui.component.PositionedComponent
+import com.willfp.eco.core.gui.component.addComponent
+import com.willfp.eco.core.gui.getSlotLocations
 import com.willfp.eco.core.gui.menu.Menu
 import com.willfp.eco.core.gui.menu.MenuLayer
 import com.willfp.eco.core.gui.onClick
@@ -26,8 +30,10 @@ class ConfigurableSlot(
     baseContext: ViolationContext,
     private val config: Config
 ) : PositionedComponent {
-    override val row: Int = config.getInt("location.row")
-    override val column: Int = config.getInt("location.column")
+    override val locations: List<SlotLocation> = config.getSlotLocations()
+
+    private val row: Int = locations.first().row
+    private val column: Int = locations.first().column
     val page: Int? = config.getIntOrNull("location.page")
 
     override val layer: Int = config.get("location.layer") as? Int? ?: MenuLayer.MIDDLE

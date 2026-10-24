@@ -6,13 +6,11 @@ import com.willfp.eco.core.gui.addPage
 import com.willfp.eco.core.gui.addPageChanger
 import com.willfp.eco.core.gui.menu
 import com.willfp.eco.core.gui.menu.Menu
+import com.willfp.eco.core.gui.menuStateVar
 import com.willfp.eco.core.gui.page.PageChanger
-import com.willfp.eco.core.gui.slot.FillerMask
-import com.willfp.eco.core.gui.slot.MaskItems
+import com.willfp.eco.core.gui.setMask
 import com.willfp.eco.core.sound.PlayableSound
 import com.willfp.ecomenus.components.ConfigurableSlot
-import com.willfp.ecomenus.components.addComponent
-import com.willfp.ecomponent.menuStateVar
 import com.willfp.libreforge.ConfigViolation
 import com.willfp.libreforge.ViolationContext
 import org.bukkit.entity.Player
@@ -78,15 +76,10 @@ fun buildMenu(plugin: EcoPlugin, menu: EcoMenu, config: Config): Menu {
         }
 
         for (page in pageConfigs) {
-            val mask = FillerMask(
-                MaskItems.fromItemNames(page.getStrings("mask.items")),
-                *page.getStrings("mask.pattern").toTypedArray()
-            )
-
             val pageNumber = page.getInt("page")
 
             addPage(pageNumber) {
-                setMask(mask)
+                setMask(page, "")
 
                 for (slot in slots) {
                     if (slot.page == null || pageNumber == slot.page) {
