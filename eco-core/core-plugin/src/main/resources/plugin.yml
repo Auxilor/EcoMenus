@@ -8,8 +8,6 @@ website: willfp.com
 load: STARTUP
 depend:
   - eco
-softdepend:
-  - libreforge
 
 commands:
   ecomenus:
