@@ -1,19 +1,19 @@
 package com.willfp.ecomenus.menus
 
-import com.willfp.eco.core.EcoPlugin
-import com.willfp.eco.core.config.interfaces.Config
-import com.willfp.eco.core.gui.addPage
-import com.willfp.eco.core.gui.addPageChanger
-import com.willfp.eco.core.gui.menu
-import com.willfp.eco.core.gui.menu.Menu
-import com.willfp.eco.core.gui.menuStateVar
-import com.willfp.eco.core.gui.page.PageChanger
-import com.willfp.eco.core.gui.setMask
-import com.willfp.eco.core.sound.PlayableSound
 import com.willfp.ecomenus.components.ConfigurableSlot
-import com.willfp.libreforge.ConfigViolation
-import com.willfp.libreforge.ViolationContext
 import org.bukkit.entity.Player
+import wiki.ecohub.config.Config
+import wiki.ecohub.config.ConfigViolation
+import wiki.ecohub.config.ViolationContext
+import wiki.ecohub.core.plugin.EcoPlugin
+import wiki.ecohub.game.sound.PlayableSound
+import wiki.ecohub.modules.menus.addPage
+import wiki.ecohub.modules.menus.addPageChanger
+import wiki.ecohub.modules.menus.menu
+import wiki.ecohub.modules.menus.menu.Menu
+import wiki.ecohub.modules.menus.menu.menuStateVar
+import wiki.ecohub.modules.menus.page.PageChanger
+import wiki.ecohub.modules.menus.setMask
 import java.util.Stack
 
 val Menu.previousMenus by menuStateVar<Stack<Menu>>("previous-menu", Stack())

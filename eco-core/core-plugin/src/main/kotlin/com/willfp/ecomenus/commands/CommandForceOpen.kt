@@ -1,12 +1,12 @@
 package com.willfp.ecomenus.commands
 
 import com.willfp.eco.core.command.impl.Subcommand
-import com.willfp.eco.util.savedDisplayName
 import com.willfp.ecomenus.menus.EcoMenus
 import com.willfp.ecomenus.plugin
 import com.willfp.ecomenus.runOwned
 import org.bukkit.command.CommandSender
 import org.bukkit.util.StringUtil
+import wiki.ecohub.game.entity.player.PlayerUtils
 
 object CommandForceOpen : Subcommand(
     plugin,
@@ -22,7 +22,7 @@ object CommandForceOpen : Subcommand(
             menu.forceOpen(player)
             sender.sendMessage(
                 plugin.langYml.getMessage("opened")
-                    .replace("%player%", player.savedDisplayName)
+                    .replace("%player%", PlayerUtils.getSavedDisplayName(player))
                     .replace("%menu%", menu.id)
             )
         }

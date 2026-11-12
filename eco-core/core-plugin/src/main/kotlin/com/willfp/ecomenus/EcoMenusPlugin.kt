@@ -1,14 +1,14 @@
 package com.willfp.ecomenus
 
-import com.willfp.eco.core.bstats.EcoMetricsChart
 import com.willfp.eco.core.command.impl.PluginCommand
 import com.willfp.ecomenus.commands.CommandEcoMenus
 import com.willfp.ecomenus.libreforge.EffectOpenMenu
 import com.willfp.ecomenus.libreforge.EffectResetPreviousMenu
 import com.willfp.ecomenus.menus.EcoMenus
-import com.willfp.libreforge.effects.Effects
-import com.willfp.libreforge.loader.LibreforgePlugin
-import com.willfp.libreforge.loader.configs.ConfigCategory
+import wiki.ecohub.config.category.NativeConfigCategory
+import wiki.ecohub.core.plugin.EcoPlugin
+import wiki.ecohub.provider.metrics.EcoMetricsChart
+import wiki.ecohub.rules.effect.Effects
 
 internal lateinit var plugin: EcoMenusPlugin
     private set

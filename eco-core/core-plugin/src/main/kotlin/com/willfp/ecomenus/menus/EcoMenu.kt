@@ -1,22 +1,22 @@
 package com.willfp.ecomenus.menus
 
-import com.willfp.eco.core.config.interfaces.Config
-import com.willfp.eco.core.gui.menu.Menu
-import com.willfp.eco.core.registry.KRegistrable
-import com.willfp.eco.core.scheduling.EcoTask
-import com.willfp.eco.util.openMenu
 import com.willfp.ecomenus.commands.DynamicMenuCommand
 import com.willfp.ecomenus.plugin
 import com.willfp.ecomenus.runOwned
-import com.willfp.libreforge.ConfigViolation
-import com.willfp.libreforge.EmptyProvidedHolder
-import com.willfp.libreforge.ViolationContext
-import com.willfp.libreforge.conditions.Conditions
-import com.willfp.libreforge.effects.Effects
-import com.willfp.libreforge.effects.executors.impl.NormalExecutorFactory
-import com.willfp.libreforge.toDispatcher
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
+import wiki.ecohub.config.Config
+import wiki.ecohub.config.ConfigViolation
+import wiki.ecohub.config.ViolationContext
+import wiki.ecohub.core.registry.KRegistrable
+import wiki.ecohub.core.scheduler.EcoTask
+import wiki.ecohub.game.entity.toDispatcher
+import wiki.ecohub.modules.menus.menu.Menu
+import wiki.ecohub.modules.menus.openMenu
+import wiki.ecohub.rules.chain.NormalExecutorFactory
+import wiki.ecohub.rules.condition.Conditions
+import wiki.ecohub.rules.effect.Effects
+import wiki.ecohub.rules.holder.EmptyProvidedHolder
 
 class EcoMenu(
     override val id: String,
