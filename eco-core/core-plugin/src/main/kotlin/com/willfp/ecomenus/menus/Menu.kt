@@ -61,7 +61,7 @@ fun buildMenu(plugin: EcoPlugin, menu: EcoMenu, config: Config): Menu {
     val pageChangeSound = PlayableSound.create(config.getSubsection("page-change-sound"))
 
     return menu(config.getInt("rows")) {
-        title = config.getFormattedString("title")
+        setTitle(config.getFormattedString("title"))
 
         allowChangingHeldItem()
 
