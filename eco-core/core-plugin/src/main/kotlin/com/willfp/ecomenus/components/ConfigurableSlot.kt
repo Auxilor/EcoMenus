@@ -36,7 +36,7 @@ class ConfigurableSlot(
     private val column: Int = locations.first().column
     val page: Int? = config.getIntOrNull("location.page")
 
-    override val layer: Int = config.get("location.layer") as? Int? ?: MenuLayer.MIDDLE
+    override val layer: Int = config["location.layer"] as? Int? ?: MenuLayer.MIDDLE
 
     private val context = baseContext.with("slot at row ${row}, column $column, page $page")
 
@@ -51,29 +51,31 @@ class ConfigurableSlot(
 
     private val isDynamicBaseItem = itemLookupString.findPlaceholders().isNotEmpty()
 
-    private val baseItem = Items.lookup(config.getString("item")).item
+    private val baseItem = Items.lookup(config.getString("item")).getItem()
 
     private val slot = slot({ player, _ ->
         val item = if (isDynamicBaseItem) {
             Items.lookup(
                 itemLookupString
                     .translatePlaceholders(placeholderContext(player = player))
-            ).item
+            ).getItem()
         } else {
             baseItem
         }
 
         item.clone().fast().apply {
             if (config.has("lore")) {
-                this.lore = config.getFormattedStrings(
-                    "lore", placeholderContext(
-                        player = player
+                setLore(
+                    config.getFormattedStrings(
+                        "lore", placeholderContext(
+                            player = player
+                        )
                     )
                 )
             }
 
             if (!conditions.areMet(player.toDispatcher(), EmptyProvidedHolder)) {
-                this.lore = this.lore + conditions.getNotMetLines(player.toDispatcher(), EmptyProvidedHolder)
+                setLore(getLore() + conditions.getNotMetLines(player.toDispatcher(), EmptyProvidedHolder))
             }
         }.unwrap()
     }) {
