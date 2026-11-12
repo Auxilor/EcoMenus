@@ -1,24 +1,27 @@
 package com.willfp.ecomenus.commands
 
-import com.willfp.eco.core.command.impl.Subcommand
 import com.willfp.ecomenus.menus.EcoMenus
-import com.willfp.ecomenus.plugin
-import com.willfp.ecomenus.runOnGlobalRegion
+import org.bukkit.Bukkit
 import org.bukkit.command.CommandSender
+import wiki.ecohub.core.command.CommandBuilder
+import wiki.ecohub.core.platform.runGlobal
 import wiki.ecohub.core.stdlib.toNiceString
 import wiki.ecohub.ui.text.StringUtils
 
-object CommandReload : Subcommand(
-    plugin,
-    "reload",
-    "ecomenus.command.reload",
-    false
+/**
+ * Reloading rebuilds shared registries, so it runs on the global region.
+ */
+internal fun CommandBuilder<CommandSender>.reloadCommand() = subcommand(
+    name = "reload",
+    permission = "ecomenus.command.reload"
 ) {
-    override fun onExecute(sender: CommandSender, args: List<String>) = runOnGlobalRegion {
-        sender.sendMessage(
-            plugin.langYml.getMessage("reloaded", StringUtils.FormatOption.WITHOUT_PLACEHOLDERS)
-                .replace("%time%", plugin.reloadWithTime().toNiceString())
-                .replace("%count%", EcoMenus.values().size.toString())
-        )
+    executes {
+        Bukkit.getServer().runGlobal {
+            sender.sendMessage(
+                plugin.langYml.getMessage("reloaded", StringUtils.FormatOption.WITHOUT_PLACEHOLDERS)
+                    .replace(oldValue = "%time%", newValue = plugin.reloadWithTime().toNiceString())
+                    .replace(oldValue = "%count%", newValue = EcoMenus.values().size.toString())
+            )
+        }
     }
 }

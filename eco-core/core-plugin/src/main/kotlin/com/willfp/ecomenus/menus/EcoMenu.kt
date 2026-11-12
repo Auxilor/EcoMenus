@@ -1,6 +1,6 @@
 package com.willfp.ecomenus.menus
 
-import com.willfp.ecomenus.commands.DynamicMenuCommand
+import com.willfp.ecomenus.commands.dynamicMenuCommand
 import com.willfp.ecomenus.plugin
 import com.willfp.ecomenus.runOwned
 import org.bukkit.Bukkit
@@ -8,6 +8,7 @@ import org.bukkit.entity.Player
 import wiki.ecohub.config.Config
 import wiki.ecohub.config.ConfigViolation
 import wiki.ecohub.config.ViolationContext
+import wiki.ecohub.core.command.EcoCommand
 import wiki.ecohub.core.registry.KRegistrable
 import wiki.ecohub.core.scheduler.EcoTask
 import wiki.ecohub.game.entity.toDispatcher
@@ -59,11 +60,11 @@ class EcoMenu(
 
     private var refreshTask: EcoTask? = null
 
-    private var command: DynamicMenuCommand? = null
+    private var command: EcoCommand? = null
 
     init {
         if (commandName != null) {
-            command = DynamicMenuCommand(this, commandName).apply { register() }
+            command = dynamicMenuCommand(this, commandName).apply { register() }
         }
         if (refreshEnabled) {
             refreshTask = plugin.scheduler.global().runTimer(refreshInterval, refreshInterval) {
