@@ -1,9 +1,10 @@
 package com.willfp.ecomenus
 
-import com.willfp.eco.core.Eco
-import com.willfp.eco.core.Prerequisite
 import org.bukkit.Bukkit
 import org.bukkit.entity.Entity
+import wiki.ecohub.core.Eco
+import wiki.ecohub.core.platform.ownsGlobal
+import wiki.ecohub.core.plugin.startup.Prerequisite
 
 /**
  * Run [block] on the region owning this entity: now if the current thread already owns it,
@@ -22,7 +23,7 @@ internal inline fun Entity.runOwned(crossinline block: () -> Unit) {
  * thread, which is always the case off Folia, otherwise on the next global tick.
  */
 internal inline fun runOnGlobalRegion(crossinline block: () -> Unit) {
-    if (Prerequisite.HAS_FOLIA.isMet && !Bukkit.isGlobalTickThread()) {
+    if (Prerequisite.HAS_FOLIA.isMet && !Bukkit.getServer().ownsGlobal()) {
         plugin.scheduler.global().run { block() }
     } else {
         block()

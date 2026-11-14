@@ -1,19 +1,19 @@
 package com.willfp.ecomenus
 
-import com.willfp.eco.core.bstats.EcoMetricsChart
-import com.willfp.eco.core.command.impl.PluginCommand
-import com.willfp.ecomenus.commands.CommandEcoMenus
+import com.willfp.ecomenus.commands.ecoMenusCommand
 import com.willfp.ecomenus.libreforge.EffectOpenMenu
 import com.willfp.ecomenus.libreforge.EffectResetPreviousMenu
 import com.willfp.ecomenus.menus.EcoMenus
-import com.willfp.libreforge.effects.Effects
-import com.willfp.libreforge.loader.LibreforgePlugin
-import com.willfp.libreforge.loader.configs.ConfigCategory
+import wiki.ecohub.config.category.NativeConfigCategory
+import wiki.ecohub.core.command.EcoCommand
+import wiki.ecohub.core.plugin.EcoPlugin
+import wiki.ecohub.provider.metrics.EcoMetricsChart
+import wiki.ecohub.rules.effect.Effects
 
 internal lateinit var plugin: EcoMenusPlugin
     private set
 
-class EcoMenusPlugin : LibreforgePlugin() {
+class EcoMenusPlugin : EcoPlugin() {
     init {
         plugin = this
     }
@@ -23,13 +23,13 @@ class EcoMenusPlugin : LibreforgePlugin() {
         Effects.register(EffectResetPreviousMenu)
     }
 
-    override fun loadPluginCommands(): List<PluginCommand> {
+    override fun loadPluginCommands(): List<EcoCommand> {
         return listOf(
-            CommandEcoMenus
+            ecoMenusCommand()
         )
     }
 
-    override fun loadConfigCategories(): List<ConfigCategory> {
+    override fun loadConfigCategories(): List<NativeConfigCategory> {
         return listOf(
             EcoMenus
         )
