@@ -1,19 +1,19 @@
 package com.willfp.ecomenus.menus
 
-import com.willfp.eco.core.config.interfaces.Config
-import com.willfp.eco.core.registry.Registry
-import com.willfp.libreforge.loader.LibreforgePlugin
-import com.willfp.libreforge.loader.configs.ConfigCategory
+import wiki.ecohub.config.Config
+import wiki.ecohub.config.category.NativeConfigCategory
+import wiki.ecohub.core.plugin.EcoPlugin
+import wiki.ecohub.core.registry.Registry
 
-object EcoMenus : ConfigCategory("menu", "menus") {
+object EcoMenus : NativeConfigCategory("menus", "menu") {
     private val registry = Registry<EcoMenu>()
 
-    override fun clear(plugin: LibreforgePlugin) {
+    override fun clear(plugin: EcoPlugin) {
         registry.values().forEach { it.dispose() }
         registry.clear()
     }
 
-    override fun acceptConfig(plugin: LibreforgePlugin, id: String, config: Config) {
+    override fun acceptConfig(plugin: EcoPlugin, id: String, config: Config) {
         registry.register(EcoMenu(id, config))
     }
 
@@ -22,6 +22,6 @@ object EcoMenus : ConfigCategory("menu", "menus") {
     }
 
     operator fun get(id: String?): EcoMenu? {
-        return registry.get(id ?: return null)
+        return registry[id ?: return null]
     }
 }

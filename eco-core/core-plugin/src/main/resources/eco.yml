@@ -1,7 +1,3 @@
-environment:
-  - name: libreforge version
-    value: ${libreforgeVersion}
-
 options:
   bstats-id: 31230
   resource-id: 0

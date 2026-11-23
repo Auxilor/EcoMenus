@@ -1,30 +1,30 @@
 package com.willfp.ecomenus.components
 
-import com.willfp.eco.core.config.interfaces.Config
-import com.willfp.eco.core.fast.fast
-import com.willfp.eco.core.gui.SlotLocation
-import com.willfp.eco.core.gui.component.PositionedComponent
-import com.willfp.eco.core.gui.component.addComponent
-import com.willfp.eco.core.gui.getSlotLocations
-import com.willfp.eco.core.gui.menu.Menu
-import com.willfp.eco.core.gui.menu.MenuLayer
-import com.willfp.eco.core.gui.onClick
-import com.willfp.eco.core.gui.page.PageBuilder
-import com.willfp.eco.core.gui.slot
-import com.willfp.eco.core.gui.slot.Slot
-import com.willfp.eco.core.items.Items
-import com.willfp.eco.core.placeholder.context.placeholderContext
-import com.willfp.eco.core.placeholder.findPlaceholders
-import com.willfp.eco.core.placeholder.translatePlaceholders
-import com.willfp.libreforge.ConfigViolation
-import com.willfp.libreforge.EmptyProvidedHolder
-import com.willfp.libreforge.ViolationContext
-import com.willfp.libreforge.conditions.Conditions
-import com.willfp.libreforge.effects.Effects
-import com.willfp.libreforge.effects.executors.impl.NormalExecutorFactory
-import com.willfp.libreforge.toDispatcher
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.ClickType
+import wiki.ecohub.config.Config
+import wiki.ecohub.config.ConfigViolation
+import wiki.ecohub.config.ViolationContext
+import wiki.ecohub.game.entity.toDispatcher
+import wiki.ecohub.game.item.Items
+import wiki.ecohub.game.item.fast
+import wiki.ecohub.modules.menus.SlotLocation
+import wiki.ecohub.modules.menus.component.PositionedComponent
+import wiki.ecohub.modules.menus.component.addComponent
+import wiki.ecohub.modules.menus.getSlotLocations
+import wiki.ecohub.modules.menus.menu.Menu
+import wiki.ecohub.modules.menus.menu.MenuLayer
+import wiki.ecohub.modules.menus.onClick
+import wiki.ecohub.modules.menus.page.PageBuilder
+import wiki.ecohub.modules.menus.slot
+import wiki.ecohub.modules.menus.slot.Slot
+import wiki.ecohub.rules.chain.NormalExecutorFactory
+import wiki.ecohub.rules.condition.Conditions
+import wiki.ecohub.rules.effect.Effects
+import wiki.ecohub.rules.holder.EmptyProvidedHolder
+import wiki.ecohub.ui.placeholder.placeholderContext
+import wiki.ecohub.ui.text.findPlaceholders
+import wiki.ecohub.ui.text.translatePlaceholders
 
 class ConfigurableSlot(
     baseContext: ViolationContext,
@@ -36,7 +36,7 @@ class ConfigurableSlot(
     private val column: Int = locations.first().column
     val page: Int? = config.getIntOrNull("location.page")
 
-    override val layer: Int = config.get("location.layer") as? Int? ?: MenuLayer.MIDDLE
+    override val layer: Int = config["location.layer"] as? Int? ?: MenuLayer.MIDDLE
 
     private val context = baseContext.with("slot at row ${row}, column $column, page $page")
 
@@ -51,29 +51,31 @@ class ConfigurableSlot(
 
     private val isDynamicBaseItem = itemLookupString.findPlaceholders().isNotEmpty()
 
-    private val baseItem = Items.lookup(config.getString("item")).item
+    private val baseItem = Items.lookup(config.getString("item")).getItem()
 
     private val slot = slot({ player, _ ->
         val item = if (isDynamicBaseItem) {
             Items.lookup(
                 itemLookupString
                     .translatePlaceholders(placeholderContext(player = player))
-            ).item
+            ).getItem()
         } else {
             baseItem
         }
 
         item.clone().fast().apply {
             if (config.has("lore")) {
-                this.lore = config.getFormattedStrings(
-                    "lore", placeholderContext(
-                        player = player
+                setLore(
+                    config.getFormattedStrings(
+                        "lore", placeholderContext(
+                            player = player
+                        )
                     )
                 )
             }
 
             if (!conditions.areMet(player.toDispatcher(), EmptyProvidedHolder)) {
-                this.lore = this.lore + conditions.getNotMetLines(player.toDispatcher(), EmptyProvidedHolder)
+                setLore(getLore() + conditions.getNotMetLines(player.toDispatcher(), EmptyProvidedHolder))
             }
         }.unwrap()
     }) {

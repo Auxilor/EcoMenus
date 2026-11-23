@@ -1,52 +1,24 @@
 package com.willfp.ecomenus.commands
 
-import com.willfp.eco.core.command.impl.Subcommand
-import com.willfp.eco.util.savedDisplayName
-import com.willfp.ecomenus.menus.EcoMenus
-import com.willfp.ecomenus.plugin
-import com.willfp.ecomenus.runOwned
 import org.bukkit.command.CommandSender
-import org.bukkit.util.StringUtil
+import wiki.ecohub.core.command.CommandBuilder
+import wiki.ecohub.game.entity.player.PlayerUtils
+import wiki.ecohub.game.entity.runOwned
 
-object CommandForceOpen : Subcommand(
-    plugin,
-    "forceopen",
-    "ecomenus.command.forceopen",
-    false
+internal fun CommandBuilder<CommandSender>.forceOpenCommand() = subcommand(
+    name = "forceopen",
+    permission = "ecomenus.command.forceopen"
 ) {
-    override fun onExecute(sender: CommandSender, args: List<String>) {
-        val menu = notifyNull(EcoMenus[args.getOrNull(0)], "invalid-menu")
-        val player = notifyPlayerRequired(args.getOrNull(1), "invalid-player")
+    executes {
+        val (menu, player) = menuAndPlayer()
 
         player.runOwned {
             menu.forceOpen(player)
-            sender.sendMessage(
-                plugin.langYml.getMessage("opened")
-                    .replace("%player%", player.savedDisplayName)
-                    .replace("%menu%", menu.id)
-            )
+            reply("opened", "player" to PlayerUtils.getSavedDisplayName(player), "menu" to menu.id)
         }
     }
 
-    override fun tabComplete(sender: CommandSender, args: List<String>): List<String> {
-        val completions = mutableListOf<String>()
-
-        if (args.size == 1) {
-            StringUtil.copyPartialMatches(
-                args[0],
-                EcoMenus.values().map { it.id },
-                completions
-            )
-        }
-
-        if (args.size == 2) {
-            StringUtil.copyPartialMatches(
-                args[1],
-                plugin.server.onlinePlayers.map { it.name },
-                completions
-            )
-        }
-
-        return completions
+    completes {
+        menuAndPlayerCompletions()
     }
 }
